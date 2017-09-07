@@ -14,10 +14,11 @@ var dynomike;
     (function (RoyalFlush) {
         var Scene = /** @class */ (function (_super) {
             __extends(Scene, _super);
-            function Scene() {
+            function Scene(app) {
                 var _this = _super.call(this) || this;
                 _this.paused = false;
                 _this.updateCallback = function () { };
+                _this._app = app;
                 return _this;
             }
             Scene.prototype.onUpdate = function (updateCallback) {

@@ -16,8 +16,8 @@ var dynomike;
     (function (RoyalFlush) {
         var GameScene = /** @class */ (function (_super) {
             __extends(GameScene, _super);
-            function GameScene() {
-                var _this = _super.call(this) || this;
+            function GameScene(app) {
+                var _this = _super.call(this, app) || this;
                 console.log("GameScene constructor called");
                 _this.symbol_1 = PIXI.Sprite.fromImage("assets/img/symbol_1.png");
                 _this.symbol_1.position.x = 100;
@@ -29,7 +29,6 @@ var dynomike;
             }
             GameScene.prototype.update = function () {
                 _super.prototype.update.call(this);
-                this.symbol_1.rotation += 0.1;
             };
             return GameScene;
         }(RoyalFlush.Scene));

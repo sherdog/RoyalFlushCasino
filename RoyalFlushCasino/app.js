@@ -6,5 +6,9 @@ window.onload = function () {
     var blank = sceneManager.createScene('fake', dynomike.RoyalFlush.FakeScene);
     var intro = sceneManager.createScene('intro'); //update this to show the intro scene
     sceneManager.gotoScene('fake');
+    addEventListener("onStartClicked", function () {
+        console.log('ON SHIT');
+        sceneManager.gotoScene('game');
+    });
 };
 //# sourceMappingURL=app.js.map

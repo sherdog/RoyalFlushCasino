@@ -6,8 +6,8 @@ module dynomike.RoyalFlush {
 
         public symbol_1: PIXI.Sprite;
 
-        constructor() {
-            super();
+        constructor(app: PIXI.Application) {
+            super(app);
             
             console.log("GameScene constructor called");
 
@@ -21,7 +21,6 @@ module dynomike.RoyalFlush {
 
         public update() {
             super.update();
-            this.symbol_1.rotation += 0.1;
         }
 
     }

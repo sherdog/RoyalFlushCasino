@@ -2,9 +2,11 @@ module dynomike.RoyalFlush {
     export class Scene extends PIXI.Container{
         private paused: boolean = false;
         private updateCallback = function () { };
+        protected _app: PIXI.Application;
 
-        constructor() {
+        constructor(app: PIXI.Application) {
             super();
+            this._app = app;
         }
 
         public onUpdate(updateCallback: () => void) {
