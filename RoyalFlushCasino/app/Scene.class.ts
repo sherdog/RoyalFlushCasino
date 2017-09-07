@@ -3,6 +3,7 @@ module dynomike.RoyalFlush {
         private paused: boolean = false;
         private updateCallback = function () { };
         protected _app: PIXI.Application;
+        protected _loader: PIXI.loaders.Loader;
 
         constructor(app: PIXI.Application) {
             super();

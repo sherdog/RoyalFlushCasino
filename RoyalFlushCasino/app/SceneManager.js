@@ -5,19 +5,9 @@ var dynomike;
         var SceneManager = /** @class */ (function () {
             function SceneManager() {
             }
-            SceneManager.create = function (width, height) {
-                if (SceneManager._renderer)
-                    return this;
-                this._app = new PIXI.Application(width, height, { backgroundColor: 0x1099bb });
-                this._renderer = this._app.renderer;
-                this._stage = this._app.stage;
-                document.body.appendChild(this._app.view);
-                addEventListener('onStartClicked', this.onStartClicked);
+            SceneManager.init = function (app) {
+                this._app = app;
                 requestAnimationFrame(SceneManager.loop);
-                return this;
-            };
-            SceneManager.onStartClicked = function (event) {
-                console.log('onStartClicked called fuck me.');
             };
             SceneManager.createScene = function (id, NewScene) {
                 if (NewScene === void 0) { NewScene = RoyalFlush.Scene; }
@@ -33,10 +23,7 @@ var dynomike;
                 if (!this.currentScene || this.currentScene.isPaused())
                     return;
                 this.currentScene.update();
-                this._app.renderer.render(this.currentScene);
-            };
-            SceneManager.getStage = function () {
-                return this._app;
+                this._renderer.render(this.currentScene);
             };
             SceneManager.gotoScene = function (id) {
                 if (SceneManager.scenes[id]) {
@@ -49,8 +36,6 @@ var dynomike;
                 return false;
             };
             SceneManager.scenes = {};
-            SceneManager._loader = PIXI.loader;
-            SceneManager._resources = PIXI.loader.resources;
             return SceneManager;
         }());
         RoyalFlush.SceneManager = SceneManager;

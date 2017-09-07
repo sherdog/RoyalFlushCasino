@@ -12,18 +12,16 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var Reel = /** @class */ (function (_super) {
-            __extends(Reel, _super);
-            function Reel() {
+        var PlayerModel = /** @class */ (function (_super) {
+            __extends(PlayerModel, _super);
+            function PlayerModel() {
                 var _this = _super.call(this) || this;
-                _this.symbolArray = [];
+                console.log('PlayerModel class instantiated');
                 return _this;
             }
-            Reel.prototype.populateReel = function () {
-            };
-            return Reel;
-        }(PIXI.Container));
-        RoyalFlush.Reel = Reel;
+            return PlayerModel;
+        }(RoyalFlush.Model));
+        RoyalFlush.PlayerModel = PlayerModel;
     })(RoyalFlush = dynomike.RoyalFlush || (dynomike.RoyalFlush = {}));
 })(dynomike || (dynomike = {}));
-//# sourceMappingURL=Reel.class.js.map
+//# sourceMappingURL=PlayerModel.class.js.map
