@@ -1,5 +1,5 @@
-///<reference path="Scene.class.ts" />
-///<reference path="../lib/pixi.d.ts" />
+///<reference path="../Scene.class.ts" />
+///<reference path="../../lib/pixi.d.ts" />
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -14,25 +14,24 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var GameScene = /** @class */ (function (_super) {
-            __extends(GameScene, _super);
-            function GameScene() {
+        var FakeScene = /** @class */ (function (_super) {
+            __extends(FakeScene, _super);
+            function FakeScene() {
                 var _this = _super.call(this) || this;
-                console.log("GameScene constructor called");
-                _this.symbol_1 = PIXI.Sprite.fromImage("assets/img/symbol_1.png");
+                console.log("FakeScene constructor called");
+                _this.symbol_1 = PIXI.Sprite.fromImage("assets/img/symbol_2.png");
                 _this.symbol_1.position.x = 100;
                 _this.symbol_1.position.y = 100;
                 _this.addChild(_this.symbol_1);
                 return _this;
             }
-            GameScene.prototype.update = function () {
+            FakeScene.prototype.update = function () {
                 _super.prototype.update.call(this);
-                console.log('update called');
                 this.symbol_1.rotation += 0.1;
             };
-            return GameScene;
+            return FakeScene;
         }(RoyalFlush.Scene));
-        RoyalFlush.GameScene = GameScene;
+        RoyalFlush.FakeScene = FakeScene;
     })(RoyalFlush = dynomike.RoyalFlush || (dynomike.RoyalFlush = {}));
 })(dynomike || (dynomike = {}));
-//# sourceMappingURL=GameScene.js.map
+//# sourceMappingURL=FakeScene.js.map

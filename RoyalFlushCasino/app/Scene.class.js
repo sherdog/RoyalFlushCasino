@@ -33,10 +33,10 @@ var dynomike;
                 this.paused = false;
             };
             Scene.prototype.isPaused = function () {
-                return this.isPaused;
+                return this.paused;
             };
             return Scene;
-        }(PIXI.Stage));
+        }(PIXI.Container));
         RoyalFlush.Scene = Scene;
     })(RoyalFlush = dynomike.RoyalFlush || (dynomike.RoyalFlush = {}));
 })(dynomike || (dynomike = {}));

@@ -6,10 +6,13 @@ var dynomike;
             function SceneManager() {
             }
             SceneManager.create = function (width, height) {
-                if (SceneManager.renderer)
+                if (SceneManager._renderer)
                     return this;
-                SceneManager.renderer = PIXI.autoDetectRenderer(width, height);
-                document.body.appendChild(SceneManager.renderer.view);
+                this._app = new PIXI.Application(width, height, { backgroundColor: 0x1099bb });
+                this._renderer = this._app.renderer;
+                this._stage = this._app.stage;
+                console.log("renderer: " + this._renderer);
+                document.body.appendChild(this._app.view);
                 requestAnimationFrame(SceneManager.loop);
                 return this;
             };
@@ -19,6 +22,7 @@ var dynomike;
                     return undefined;
                 var scene = new NewScene();
                 SceneManager.scenes[id] = scene;
+                this._stage.addChild(scene);
                 return scene;
             };
             SceneManager.loop = function () {
@@ -26,10 +30,9 @@ var dynomike;
                 if (!this.currentScene || this.currentScene.isPaused())
                     return;
                 this.currentScene.update();
-                SceneManager.renderer.render(this.currentScene);
+                this._app.renderer.render(this.currentScene);
             };
             SceneManager.gotoScene = function (id) {
-                console.log('gotoScene called for id: ' + id);
                 if (SceneManager.scenes[id]) {
                     if (SceneManager.currentScene)
                         SceneManager.currentScene.pause();

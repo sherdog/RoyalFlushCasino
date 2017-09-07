@@ -4,13 +4,19 @@ module dynomike.RoyalFlush {
 
         private static scenes: any = {};
         public static currentScene: Scene;
-        public static renderer: PIXI.IRenderer;
+        private static _renderer;
+        private static _app;
+        private static _stage;
 
         public static create(width: number, height: number) {
-            if (SceneManager.renderer) return this;
+            if (SceneManager._renderer) return this;
 
-            SceneManager.renderer = PIXI.autoDetectRenderer(width, height);
-            document.body.appendChild(SceneManager.renderer.view);
+            this._app = new PIXI.Application(width, height, { backgroundColor: 0x1099bb });
+            this._renderer = this._app.renderer;
+            this._stage = this._app.stage;
+            console.log("renderer: " + this._renderer);
+            document.body.appendChild(this._app.view);
+
             requestAnimationFrame(SceneManager.loop);
             return this;
         }
@@ -20,19 +26,18 @@ module dynomike.RoyalFlush {
 
             var scene = new NewScene();
             SceneManager.scenes[id] = scene;
+            this._stage.addChild(scene);
             return scene;
         }
 
         private static loop() {
             requestAnimationFrame(function () { SceneManager.loop() });
-
             if (!this.currentScene || this.currentScene.isPaused()) return;
             this.currentScene.update();
-            SceneManager.renderer.render(this.currentScene);
+            this._app.renderer.render(this.currentScene);
         }
 
         public static gotoScene(id: string): boolean {
-            console.log('gotoScene called for id: ' + id)
             if (SceneManager.scenes[id]) {
                 if (SceneManager.currentScene)
                     SceneManager.currentScene.pause();

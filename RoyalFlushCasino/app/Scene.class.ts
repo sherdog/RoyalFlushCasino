@@ -1,5 +1,5 @@
 module dynomike.RoyalFlush {
-    export class Scene extends PIXI.Stage {
+    export class Scene extends PIXI.Container{
         private paused: boolean = false;
         private updateCallback = function () { };
 
@@ -24,7 +24,7 @@ module dynomike.RoyalFlush {
         }
 
         public isPaused() {
-            return this.isPaused;
+            return this.paused;
         }
     }
 }

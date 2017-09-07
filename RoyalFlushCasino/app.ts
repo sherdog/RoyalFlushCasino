@@ -5,9 +5,7 @@
     sceneManager.create(1170, 768);
 
     var game = sceneManager.createScene('game', dynomike.RoyalFlush.GameScene);
-    var blank = sceneManager.createScene('blank');
-
-    sceneManager.gotoScene('game');
-
-    var app = new PIXI.Application()
+    var blank = sceneManager.createScene('fake', dynomike.RoyalFlush.FakeScene);
+    var intro = sceneManager.createScene('intro'); //update this to show the intro scene
+    sceneManager.gotoScene('fake');
 }
