@@ -3,6 +3,7 @@ module dynomike.RoyalFlush {
 
         public playerID: string;
 
+
         constructor() {
             super();
             console.log('PlayerModel class instantiated');

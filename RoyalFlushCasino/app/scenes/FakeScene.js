@@ -1,4 +1,4 @@
-///<reference path="base/Scene.class.ts" />
+///<reference path="base/Scene.ts" />
 ///<reference path="../../lib/pixi.d.ts" />
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||

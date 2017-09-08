@@ -1,13 +1,14 @@
 ///<reference path="../../../../lib/pixi.d.ts" />
 
 module dynomike.RoyalFlush {
-    export class TripleDiamond extends PIXI.Container{
+    export class TripleDiamond extends PIXI.Container {
 
         protected slotMachineBackground: PIXI.Sprite;
+        protected _spinButton: dynomike.RoyalFlush.Button;
+        protected reelContainer: PIXI.Container;
         protected reel1: dynomike.RoyalFlush.SlotReel;
         protected reel2: dynomike.RoyalFlush.SlotReel;
         protected reel3: dynomike.RoyalFlush.SlotReel;
-        protected reelContainer: PIXI.Container;
 
         constructor() {
             super();
@@ -15,13 +16,12 @@ module dynomike.RoyalFlush {
         }
 
         protected initialize() {
+
             console.log('Loading tripe dialog slot :: initialize called');
 
             this.reelContainer = new PIXI.Container();
 
             this.slotMachineBackground = PIXI.Sprite.fromImage("assets/img/tripleDiamonSlotMachine.png");
-
-            console.log('machine width: ' + this.slotMachineBackground.width);
 
             this.slotMachineBackground.pivot.x = this.slotMachineBackground.width / 2;
             this.slotMachineBackground.pivot.y = this.slotMachineBackground.height / 2;
@@ -45,6 +45,22 @@ module dynomike.RoyalFlush {
             this.reel2.position.x = 220;
             this.reel3.position.x = 440;
 
+            var buttonOutTexture = PIXI.Texture.fromImage("assets/img/btnSpin_out.png");
+            var buttonOverTexture = PIXI.Texture.fromImage("assets/img/btnSpin_over.png");
+
+            this._spinButton = new dynomike.RoyalFlush.Button(buttonOutTexture, buttonOverTexture, this.onSpinClickHandler);
+            this.addChild(this._spinButton);
+            this._spinButton.on("pointerdown", this.onSpinClickHandler.bind(this));
+
+            this._spinButton.position.x = 430;
+            this._spinButton.position.y = 600;
+           
+        }
+
+        protected onSpinClickHandler(event) {
+            this.reel1.spin();
+            this.reel2.spin();
+            this.reel3.spin();
         }
     }
 }

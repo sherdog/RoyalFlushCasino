@@ -1,5 +1,3 @@
-///<reference path="base/Scene.class.ts" />
-///<reference path="../slot/base/SlotController.class.ts" />
 ///<reference path="../../lib/pixi.d.ts" />
 
 module dynomike.RoyalFlush {
@@ -20,8 +18,7 @@ module dynomike.RoyalFlush {
 
             this._slotController = new dynomike.RoyalFlush.SlotController();
             this.addChild(this._slotController);
-            this._slotController.load();
-
+            this._slotController.load(dynomike.RoyalFlush.SlotTypes.SLOT_TRIPLE_DIAMOND);
         }
 
         public update() {

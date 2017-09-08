@@ -1,5 +1,3 @@
-///<reference path="base/Scene.class.ts" />
-///<reference path="../slot/base/SlotController.class.ts" />
 ///<reference path="../../lib/pixi.d.ts" />
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -28,7 +26,7 @@ var dynomike;
             GameScene.prototype.onSceneLoaded = function () {
                 this._slotController = new dynomike.RoyalFlush.SlotController();
                 this.addChild(this._slotController);
-                this._slotController.load();
+                this._slotController.load(dynomike.RoyalFlush.SlotTypes.SLOT_TRIPLE_DIAMOND);
             };
             GameScene.prototype.update = function () {
                 _super.prototype.update.call(this);
