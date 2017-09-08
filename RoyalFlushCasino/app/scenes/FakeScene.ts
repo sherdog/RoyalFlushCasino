@@ -1,4 +1,4 @@
-///<reference path="../Scene.class.ts" />
+///<reference path="base/Scene.class.ts" />
 ///<reference path="../../lib/pixi.d.ts" />
 
 module dynomike.RoyalFlush {

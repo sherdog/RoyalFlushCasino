@@ -1,4 +1,4 @@
-///<reference path="../Scene.class.ts" />
+///<reference path="base/Scene.class.ts" />
 ///<reference path="../../lib/pixi.d.ts" />
 ///<reference path="../SlotReel.class.ts" />
 var __extends = (this && this.__extends) || (function () {
