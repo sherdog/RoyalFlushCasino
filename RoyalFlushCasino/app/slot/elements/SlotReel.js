@@ -28,9 +28,9 @@ var dynomike;
                 this.symbol_3 = PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_SingleBar.png');
                 this.symbol_4 = PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_TripleBar.png');
                 this.symbol_5 = PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_TripleDiamond.png');
-                this.symbolArray = [this.symbol_1, this.symbol_2, this.symbol_3, this.symbol_4, this.symbol_5, this.symbol_1, this.symbol_4, this.symbol_2, this.symbol_3, this.symbol_5];
+                this.symbolArray = [this.symbol_1, this.symbol_2, this.symbol_3, this.symbol_4, this.symbol_5];
                 this.symbolArray = this.shuffle(this.symbolArray);
-                var nextY = this.rand(-200, 200);
+                var nextY = this.rand(-100, 100);
                 var padding = 25;
                 for (var i = 0; i < this.symbolArray.length; i++) {
                     this.symbolArray[i].position.y = nextY;
@@ -50,6 +50,9 @@ var dynomike;
             };
             SlotReel.prototype.spin = function () {
                 this.symbolContainer.position.y = this.y + this.rand(-100, 100);
+            };
+            SlotReel.prototype.update = function (positionY) {
+                this.symbolContainer.position.y += positionY;
             };
             SlotReel.prototype.shuffle = function (array) {
                 var currentIndex = array.length, temporaryValue, randomIndex;

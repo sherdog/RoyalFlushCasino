@@ -16,12 +16,59 @@ var dynomike;
             __extends(SlotMachine, _super);
             function SlotMachine() {
                 var _this = _super.call(this) || this;
+                _this._state = "StateIdle";
+                _this.TILE_WIDTH = 100;
+                _this.TILE_HEIGHT = _this.TILE_WIDTH;
+                _this.STATE_SPINNING = "SlotSpinning";
+                _this.STATE_IDLE = "SlotIdle";
+                _this.STATE_VALIDATING_SPIN = "SlotValidatingSpin";
+                _this.reelArray = [];
                 _this.initialize();
                 return _this;
             }
             SlotMachine.prototype.initialize = function () {
                 //override in concretes
-                console.log('SlotMachine initialize called');
+                this.onSlotReady();
+            };
+            SlotMachine.prototype.onSlotReady = function () {
+                var preChoosedPosition = this.getRandomPositions();
+                for (var i = 0; i < this.reelArray.length; i++) {
+                    var finishPos = (-preChoosedPosition[i] * this.TILE_HEIGHT) + 25;
+                    this.reelArray[i].tilePosition = finishPos;
+                }
+                this.draw();
+            };
+            SlotMachine.prototype.startReelAnimation = function () {
+                this._state = this.STATE_SPINNING;
+                var preChoosedPosition = this.getRandomPositions();
+                for (var i = 0; i < this.reelArray.length; i++) {
+                    var finishPos = (-preChoosedPosition[i] * this.TILE_HEIGHT) + 25;
+                    this.reelArray[i].tilePosition = finishPos;
+                }
+            };
+            SlotMachine.prototype.draw = function () {
+                requestAnimationFrame(this.draw.bind(this));
+                if (this._state === this.STATE_SPINNING) {
+                    for (var i = 0; i < this.reelArray.length; i++) {
+                        this.reelArray[i].update(1);
+                    }
+                }
+                else if (this._state === this.STATE_IDLE) {
+                }
+                else if (this._state === this.STATE_VALIDATING_SPIN) {
+                }
+            };
+            SlotMachine.prototype.getRandomPositions = function () {
+                var x = this.getRandomInt(0, 100);
+                if (x > 50) {
+                    x = this.getRandomInt(0, 6);
+                    return [x, x, x];
+                }
+                return [this.getRandomInt(0, 6), this.getRandomInt(0, 6), this.getRandomInt(0, 6)];
+            };
+            SlotMachine.prototype.getRandomInt = function (min, max) {
+                var randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+                return randomNumber;
             };
             return SlotMachine;
         }(PIXI.Container));

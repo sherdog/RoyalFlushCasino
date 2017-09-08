@@ -16,10 +16,12 @@ var dynomike;
         var TripleDiamond = /** @class */ (function (_super) {
             __extends(TripleDiamond, _super);
             function TripleDiamond() {
-                return _super.call(this) || this;
+                var _this = _super.call(this) || this;
+                _this.TILE_WIDTH = 165;
+                _this.TILE_HEIGHT = 165;
+                return _this;
             }
             TripleDiamond.prototype.initialize = function () {
-                console.log('TripleDiamond initialize called');
                 this.reelContainer = new PIXI.Container();
                 this.slotMachineBackground = PIXI.Sprite.fromImage("assets/img/tripleDiamonSlotMachine.png");
                 this.slotMachineBackground.pivot.x = this.slotMachineBackground.width / 2;
@@ -33,9 +35,11 @@ var dynomike;
                 this.reelContainer.addChild(this.reel1);
                 this.reelContainer.addChild(this.reel2);
                 this.reelContainer.addChild(this.reel3);
+                this.reelArray = [this.reel1, this.reel2, this.reel3];
                 this.addChild(this.reelContainer);
                 this.reelContainer.position.x = 165;
                 this.reelContainer.position.y = 138;
+                this.reel1.position.x = 0;
                 this.reel2.position.x = 220;
                 this.reel3.position.x = 440;
                 var buttonOutTexture = PIXI.Texture.fromImage("assets/img/btnSpin_out.png");
@@ -45,11 +49,10 @@ var dynomike;
                 this._spinButton.on("pointerdown", this.onSpinClickHandler.bind(this));
                 this._spinButton.position.x = 430;
                 this._spinButton.position.y = 600;
+                _super.prototype.initialize.call(this);
             };
             TripleDiamond.prototype.onSpinClickHandler = function (event) {
-                this.reel1.spin();
-                this.reel2.spin();
-                this.reel3.spin();
+                this.startReelAnimation();
             };
             return TripleDiamond;
         }(dynomike.RoyalFlush.SlotMachine));

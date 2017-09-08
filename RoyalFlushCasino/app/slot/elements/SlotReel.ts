@@ -26,11 +26,11 @@ module dynomike.RoyalFlush {
             this.symbol_4 = PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_TripleBar.png');
             this.symbol_5 = PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_TripleDiamond.png');
 
-            this.symbolArray = [this.symbol_1, this.symbol_2, this.symbol_3, this.symbol_4, this.symbol_5, this.symbol_1, this.symbol_4, this.symbol_2, this.symbol_3, this.symbol_5];
+            this.symbolArray = [this.symbol_1, this.symbol_2, this.symbol_3, this.symbol_4, this.symbol_5];
 
             this.symbolArray = this.shuffle(this.symbolArray);
 
-            var nextY: number = this.rand(-200, 200);
+            var nextY: number = this.rand(-100, 100);
             var padding: number = 25;
 
             for (var i = 0; i < this.symbolArray.length; i++) {
@@ -54,6 +54,11 @@ module dynomike.RoyalFlush {
 
         public spin() {
             this.symbolContainer.position.y = this.y + this.rand(-100, 100);
+        }
+
+        public update(positionY: number)
+        {
+            this.symbolContainer.position.y += positionY;
         }
 
         private shuffle(array) {
