@@ -2,12 +2,12 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var SceneManager = /** @class */ (function () {
+        var SceneManager = (function () {
             function SceneManager() {
             }
             SceneManager.init = function (app) {
                 this._app = app;
-                requestAnimationFrame(SceneManager.loop);
+                this.update();
             };
             SceneManager.createScene = function (id, NewScene) {
                 if (NewScene === void 0) { NewScene = RoyalFlush.Scene; }
@@ -15,15 +15,15 @@ var dynomike;
                     return undefined;
                 var scene = new NewScene(this._app);
                 SceneManager.scenes[id] = scene;
-                this._stage.addChild(scene);
+                this._app.stage.addChild(scene);
                 return scene;
             };
-            SceneManager.loop = function () {
-                requestAnimationFrame(function () { SceneManager.loop(); });
+            SceneManager.update = function () {
+                requestAnimationFrame(function () { SceneManager.update(); });
                 if (!this.currentScene || this.currentScene.isPaused())
                     return;
                 this.currentScene.update();
-                this._renderer.render(this.currentScene);
+                this._app.renderer.render(this.currentScene);
             };
             SceneManager.gotoScene = function (id) {
                 if (SceneManager.scenes[id]) {
@@ -35,9 +35,9 @@ var dynomike;
                 }
                 return false;
             };
-            SceneManager.scenes = {};
             return SceneManager;
         }());
+        SceneManager.scenes = {};
         RoyalFlush.SceneManager = SceneManager;
     })(RoyalFlush = dynomike.RoyalFlush || (dynomike.RoyalFlush = {}));
 })(dynomike || (dynomike = {}));

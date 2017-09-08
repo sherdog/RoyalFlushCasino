@@ -9,7 +9,7 @@ module dynomike.RoyalFlush {
 
         public static init(app: PIXI.Application) {
             this._app = app;
-            requestAnimationFrame(SceneManager.loop);
+            this.update();
         }
 
         public static createScene(id: string, NewScene: new (app: PIXI.Application) => Scene = Scene): Scene {
@@ -17,15 +17,15 @@ module dynomike.RoyalFlush {
 
             var scene = new NewScene(this._app);
             SceneManager.scenes[id] = scene;
-            this._stage.addChild(scene);
+            this._app.stage.addChild(scene);
             return scene;
         }
 
-        private static loop() {
-            requestAnimationFrame(function () { SceneManager.loop() });
+        private static update() {
+            requestAnimationFrame(function () { SceneManager.update() });
             if (!this.currentScene || this.currentScene.isPaused()) return;
             this.currentScene.update();
-            this._renderer.render(this.currentScene);
+            this._app.renderer.render(this.currentScene);
         }
 
         public static gotoScene(id: string): boolean {

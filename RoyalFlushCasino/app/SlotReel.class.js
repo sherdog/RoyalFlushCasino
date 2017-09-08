@@ -13,7 +13,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var SlotReel = /** @class */ (function (_super) {
+        var SlotReel = (function (_super) {
             __extends(SlotReel, _super);
             function SlotReel() {
                 var _this = _super.call(this) || this;

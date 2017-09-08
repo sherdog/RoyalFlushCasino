@@ -17,7 +17,6 @@
 
     //this is a scene changer. this should probably be in the scene thing itself..but it's all static :()
     addEventListener("onStartClicked", function () {
-        console.log('ON SHIT');
         sceneManager.gotoScene('game');
     });
 
