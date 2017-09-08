@@ -16,9 +16,7 @@ var dynomike;
         var TripleDiamond = /** @class */ (function (_super) {
             __extends(TripleDiamond, _super);
             function TripleDiamond() {
-                var _this = _super.call(this) || this;
-                _this.initialize();
-                return _this;
+                return _super.call(this) || this;
             }
             TripleDiamond.prototype.initialize = function () {
                 console.log('Loading tripe dialog slot :: initialize called');
@@ -54,7 +52,7 @@ var dynomike;
                 this.reel3.spin();
             };
             return TripleDiamond;
-        }(PIXI.Container));
+        }(dynomike.RoyalFlush.SlotMachine));
         RoyalFlush.TripleDiamond = TripleDiamond;
     })(RoyalFlush = dynomike.RoyalFlush || (dynomike.RoyalFlush = {}));
 })(dynomike || (dynomike = {}));

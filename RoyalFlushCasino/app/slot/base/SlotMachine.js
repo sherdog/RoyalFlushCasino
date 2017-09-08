@@ -15,9 +15,12 @@ var dynomike;
         var SlotMachine = /** @class */ (function (_super) {
             __extends(SlotMachine, _super);
             function SlotMachine() {
-                return _super.call(this) || this;
+                var _this = _super.call(this) || this;
+                _this.initialize();
+                return _this;
             }
-            SlotMachine.prototype.spinReels = function () {
+            SlotMachine.prototype.initialize = function () {
+                //override in concretes
             };
             return SlotMachine;
         }(PIXI.Container));

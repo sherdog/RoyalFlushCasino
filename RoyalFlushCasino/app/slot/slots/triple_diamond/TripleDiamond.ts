@@ -1,18 +1,10 @@
 ///<reference path="../../../../lib/pixi.d.ts" />
 
 module dynomike.RoyalFlush {
-    export class TripleDiamond extends PIXI.Container {
-
-        protected slotMachineBackground: PIXI.Sprite;
-        protected _spinButton: dynomike.RoyalFlush.Button;
-        protected reelContainer: PIXI.Container;
-        protected reel1: dynomike.RoyalFlush.SlotReel;
-        protected reel2: dynomike.RoyalFlush.SlotReel;
-        protected reel3: dynomike.RoyalFlush.SlotReel;
+    export class TripleDiamond extends dynomike.RoyalFlush.SlotMachine {
 
         constructor() {
             super();
-            this.initialize();
         }
 
         protected initialize() {
