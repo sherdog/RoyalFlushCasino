@@ -1,6 +1,9 @@
 module dynomike.RoyalFlush {
     export class SlotReel extends PIXI.Container {
 
+        private SYMBOL_HEIGHT = 165;
+        private SYMBOL_WIDTH = 165;
+
         private symbol_1: PIXI.Sprite;
         private symbol_2: PIXI.Sprite;
         private symbol_3: PIXI.Sprite;
@@ -30,7 +33,7 @@ module dynomike.RoyalFlush {
 
             this.symbolArray = this.shuffle(this.symbolArray);
 
-            var nextY: number = this.rand(-100, 100);
+            var nextY: number = 0;
             var padding: number = 25;
 
             for (var i = 0; i < this.symbolArray.length; i++) {
@@ -42,11 +45,11 @@ module dynomike.RoyalFlush {
             var rect = new PIXI.Graphics();
             rect.beginFill(0xFF00);
             rect.lineStyle(0, 0xFF0000);
-            rect.drawRect(4, 4, 165, 225);
+            rect.drawRect(4, 4, 165, 215);
 
             this.mask = rect;
             this.addChild(rect);
-            this.symbolContainer.y = -(this.symbolContainer.height / 2);
+            this.symbolContainer.y = -(this.symbolContainer.height) + (this.SYMBOL_HEIGHT * 2);
             rect.y = 175;
             console.log('symbol container height: ' + (this.symbolContainer.height));
            // rect.y = (this.symbolContainer.y + (this.symbolContainer.height / 2)) - rect.height / 2;
