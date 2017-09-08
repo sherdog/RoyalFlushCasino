@@ -19,24 +19,30 @@ var dynomike;
             __extends(GameScene, _super);
             function GameScene(app) {
                 var _this = _super.call(this, app) || this;
-                var loader = PIXI.loader;
-                loader
-                    .add('slotBackground', 'assets/img/tripleDiamonSlotMachine.png')
-                    .load(_this.onLoadComplete);
+                _this.reelContainer = new PIXI.Container();
+                _this.slotMachineBackground = PIXI.Sprite.fromImage("assets/img/tripleDiamonSlotMachine.png");
+                console.log('machine width: ' + _this.slotMachineBackground.width);
+                _this.slotMachineBackground.pivot.x = _this.slotMachineBackground.width / 2;
+                _this.slotMachineBackground.pivot.y = _this.slotMachineBackground.height / 2;
+                _this.slotMachineBackground.position.x = 100;
+                _this.slotMachineBackground.position.y = 100;
+                _this.addChild(_this.slotMachineBackground);
+                _this.reel1 = new RoyalFlush.SlotReel();
+                _this.reel2 = new RoyalFlush.SlotReel();
+                _this.reel3 = new RoyalFlush.SlotReel();
+                _this.reelContainer.addChild(_this.reel1);
+                _this.reelContainer.addChild(_this.reel2);
+                _this.reelContainer.addChild(_this.reel3);
+                _this.addChild(_this.reelContainer);
+                _this.reelContainer.position.x = 165;
+                _this.reelContainer.position.y = 138;
+                _this.reel2.position.x = 220;
+                _this.reel3.position.x = 440;
                 console.log("GameScene constructor called");
                 return _this;
             }
             GameScene.prototype.onLoadComplete = function (loader, resources) {
                 console.log('onLoadComplete called');
-                this.symbol_1 = PIXI.Sprite.fromImage("assets/img/tripleDiamonSlotMachine.png");
-                console.log('machine width: ' + this.symbol_1.width);
-                this.symbol_1.pivot.x = this.symbol_1.width / 2;
-                this.symbol_1.pivot.y = this.symbol_1.height / 2;
-                this.symbol_1.position.x = 100;
-                this.symbol_1.position.y = 100;
-                this.addChild(this.symbol_1);
-                this.reel1 = new RoyalFlush.SlotReel();
-                this.addChild(this.reel1);
             };
             GameScene.prototype.update = function () {
                 _super.prototype.update.call(this);
