@@ -8,9 +8,7 @@ module dynomike.RoyalFlush {
         }
 
         protected initialize() {
-
-            console.log('Loading tripe dialog slot :: initialize called');
-
+            console.log('TripleDiamond initialize called');
             this.reelContainer = new PIXI.Container();
 
             this.slotMachineBackground = PIXI.Sprite.fromImage("assets/img/tripleDiamonSlotMachine.png");

@@ -18,6 +18,7 @@ module dynomike.RoyalFlush {
 
             this._slotController = new dynomike.RoyalFlush.SlotController();
             this.addChild(this._slotController);
+
             this._slotController.load(dynomike.RoyalFlush.SlotTypes.SLOT_TRIPLE_DIAMOND);
         }
 

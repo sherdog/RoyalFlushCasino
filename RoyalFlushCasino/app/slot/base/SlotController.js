@@ -25,18 +25,17 @@ var dynomike;
                 return _this;
             }
             SlotController.prototype.load = function (slotName) {
-                this._slotfactory = new dynomike.RoyalFlush.SlotFactory();
                 var slot = this._slotfactory.getSlot(slotName);
                 this.addChild(slot);
             };
             SlotController.prototype.loadSlot = function (slot) {
                 this._state = this.STATE_LOADING;
-                console.log('SlotController is laoding ' + slot);
             };
             SlotController.prototype.onSlotLoaded = function () {
                 this._state = this.STATE_READY;
             };
             SlotController.prototype.onSlotLoadError = function () {
+                console.log('Error loading slot');
             };
             return SlotController;
         }(PIXI.Container));

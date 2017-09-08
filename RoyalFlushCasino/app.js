@@ -1,5 +1,4 @@
 window.onload = function () {
-    console.log('window onload called');
     var sceneManager = dynomike.RoyalFlush.SceneManager;
     var loader = PIXI.loader;
     var resources = PIXI.loader.resources;
@@ -10,12 +9,10 @@ window.onload = function () {
     sceneManager.init(app);
     //preload assets
     initializeAssets();
-    //this is a scene changer. this should probably be in the scene thing itself..but it's all static :()
     addEventListener("onStartClicked", function () {
         sceneManager.gotoScene('game');
     });
     function initializeAssets() {
-        console.log('Initialize assets called');
         loader.add('sym1', 'assets/img/symbol_1.png')
             .add('sym2', 'assets/img/symbol_2.png')
             .add('sym3', 'assets/img/symbol_3.png')
@@ -31,7 +28,6 @@ window.onload = function () {
             .load(onAssetsLoaded);
     }
     function onAssetsLoaded(loader, resources) {
-        console.log('All assets are loaded!');
         var game = sceneManager.createScene('game', dynomike.RoyalFlush.GameScene);
         var blank = sceneManager.createScene('fake', dynomike.RoyalFlush.FakeScene);
         var intro = sceneManager.createScene('intro'); //update this to show the intro scene

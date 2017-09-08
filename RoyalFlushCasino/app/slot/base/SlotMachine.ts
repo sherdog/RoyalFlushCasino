@@ -15,6 +15,7 @@ module dynomike.RoyalFlush {
 
         protected initialize() {
             //override in concretes
+            console.log('SlotMachine initialize called');
         }
     }
 }

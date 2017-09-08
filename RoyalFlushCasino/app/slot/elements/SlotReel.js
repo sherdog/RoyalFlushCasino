@@ -28,9 +28,9 @@ var dynomike;
                 this.symbol_3 = PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_SingleBar.png');
                 this.symbol_4 = PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_TripleBar.png');
                 this.symbol_5 = PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_TripleDiamond.png');
-                this.symbolArray = [this.symbol_1, this.symbol_2, this.symbol_3, this.symbol_4, this.symbol_5];
+                this.symbolArray = [this.symbol_1, this.symbol_2, this.symbol_3, this.symbol_4, this.symbol_5, this.symbol_1, this.symbol_4, this.symbol_2, this.symbol_3, this.symbol_5];
                 this.symbolArray = this.shuffle(this.symbolArray);
-                var nextY = this.rand(-100, 100);
+                var nextY = this.rand(-200, 200);
                 var padding = 25;
                 for (var i = 0; i < this.symbolArray.length; i++) {
                     this.symbolArray[i].position.y = nextY;
@@ -43,7 +43,10 @@ var dynomike;
                 rect.drawRect(4, 4, 165, 225);
                 this.mask = rect;
                 this.addChild(rect);
-                rect.y = (this.symbolContainer.y + (this.symbolContainer.height / 2)) - rect.height / 2;
+                this.symbolContainer.y = -(this.symbolContainer.height / 2);
+                rect.y = 175;
+                console.log('symbol container height: ' + (this.symbolContainer.height));
+                // rect.y = (this.symbolContainer.y + (this.symbolContainer.height / 2)) - rect.height / 2;
             };
             SlotReel.prototype.spin = function () {
                 this.symbolContainer.position.y = this.y + this.rand(-100, 100);

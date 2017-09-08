@@ -17,7 +17,6 @@ var dynomike;
             function Button(outTexture, overTexture, onClickCallback) {
                 var _this = _super.call(this) || this;
                 _this._cb = onClickCallback;
-                console.log('creating button with out/over textures: ' + outTexture + ' ' + overTexture);
                 _this.buttonMode = true;
                 _this.interactive = true;
                 _this.interactiveChildren = false;

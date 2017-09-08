@@ -10,7 +10,6 @@ module dynomike.RoyalFlush {
 
             this._cb = onClickCallback;
 
-            console.log('creating button with out/over textures: ' + outTexture + ' ' + overTexture);
             this.buttonMode = true;
             this.interactive = true;
             this.interactiveChildren = false;

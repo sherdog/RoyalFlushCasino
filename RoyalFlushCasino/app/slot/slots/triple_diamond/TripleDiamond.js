@@ -19,7 +19,7 @@ var dynomike;
                 return _super.call(this) || this;
             }
             TripleDiamond.prototype.initialize = function () {
-                console.log('Loading tripe dialog slot :: initialize called');
+                console.log('TripleDiamond initialize called');
                 this.reelContainer = new PIXI.Container();
                 this.slotMachineBackground = PIXI.Sprite.fromImage("assets/img/tripleDiamonSlotMachine.png");
                 this.slotMachineBackground.pivot.x = this.slotMachineBackground.width / 2;

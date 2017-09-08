@@ -26,10 +26,11 @@ module dynomike.RoyalFlush {
             this.symbol_4 = PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_TripleBar.png');
             this.symbol_5 = PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_TripleDiamond.png');
 
-            this.symbolArray = [this.symbol_1, this.symbol_2, this.symbol_3, this.symbol_4, this.symbol_5];
+            this.symbolArray = [this.symbol_1, this.symbol_2, this.symbol_3, this.symbol_4, this.symbol_5, this.symbol_1, this.symbol_4, this.symbol_2, this.symbol_3, this.symbol_5];
+
             this.symbolArray = this.shuffle(this.symbolArray);
 
-            var nextY: number = this.rand(-100, 100);
+            var nextY: number = this.rand(-200, 200);
             var padding: number = 25;
 
             for (var i = 0; i < this.symbolArray.length; i++) {
@@ -37,7 +38,7 @@ module dynomike.RoyalFlush {
                 this.symbolContainer.addChild(this.symbolArray[i]);
                 nextY += ((this.symbolArray[i] as PIXI.Sprite).height + padding);
             }
-
+            
             var rect = new PIXI.Graphics();
             rect.beginFill(0xFF00);
             rect.lineStyle(0, 0xFF0000);
@@ -45,7 +46,10 @@ module dynomike.RoyalFlush {
 
             this.mask = rect;
             this.addChild(rect);
-            rect.y = (this.symbolContainer.y + (this.symbolContainer.height / 2)) - rect.height / 2;
+            this.symbolContainer.y = -(this.symbolContainer.height / 2);
+            rect.y = 175;
+            console.log('symbol container height: ' + (this.symbolContainer.height));
+           // rect.y = (this.symbolContainer.y + (this.symbolContainer.height / 2)) - rect.height / 2;
         }
 
         public spin() {

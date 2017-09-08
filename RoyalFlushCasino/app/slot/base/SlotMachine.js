@@ -21,6 +21,7 @@ var dynomike;
             }
             SlotMachine.prototype.initialize = function () {
                 //override in concretes
+                console.log('SlotMachine initialize called');
             };
             return SlotMachine;
         }(PIXI.Container));
