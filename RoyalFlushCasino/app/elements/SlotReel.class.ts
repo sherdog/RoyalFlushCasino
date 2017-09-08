@@ -1,4 +1,4 @@
-///<reference path="../../lib/pixi.d.ts" />
+s///<reference path="../../lib/pixi.d.ts" />
 
 module dynomike.RoyalFlush {
     export class SlotReel extends PIXI.Container {

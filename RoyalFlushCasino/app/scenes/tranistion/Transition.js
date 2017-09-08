@@ -14,12 +14,27 @@ var dynomike;
     (function (RoyalFlush) {
         var Transition = (function (_super) {
             __extends(Transition, _super);
-            function Transition() {
-                return _super.call(this) || this;
+            function Transition(app) {
+                var _this = _super.call(this) || this;
+                _this._app = app;
+                return _this;
             }
-            Transition.prototype.loadScene = function (newScene) {
-                this._prevScene = this._currentScene;
-                this._prevScene.pause();
+            Transition.prototype.startTranition = function () {
+                //of course we'll need to base it make it so these can be customized.
+                var screenWidth;
+                var screenHeight;
+                screenWidth = this._app.renderer.width;
+                screenHeight = this._app.renderer.height;
+                this._rect = new PIXI.Graphics();
+                this._rect.beginFill(0x000000);
+                this._rect.drawRect(0, 0, screenWidth, screenHeight);
+                this.addChild(this._rect);
+            };
+            Transition.prototype.updateProgress = function (totalLoaded, totalBytes) {
+            };
+            Transition.prototype.onLoadComplete = function () {
+                //remove everything thats not needed.
+                this.removeChild(this._rect);
             };
             return Transition;
         }(PIXI.Container));
