@@ -4,7 +4,6 @@ module dynomike.RoyalFlush {
 
         private static scenes: any = {};
         public static currentScene: Scene;
-
         private static _app: PIXI.Application;
 
         public static init(app: PIXI.Application) {

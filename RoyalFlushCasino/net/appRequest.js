@@ -2,7 +2,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var AppRequest = (function () {
+        var AppRequest = /** @class */ (function () {
             function AppRequest() {
             }
             AppRequest.prototype.retry = function () {

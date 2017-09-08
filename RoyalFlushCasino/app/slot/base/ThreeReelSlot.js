@@ -12,20 +12,16 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var Slot = (function (_super) {
-            __extends(Slot, _super);
-            function Slot() {
-                var _this = _super.call(this) || this;
-                _this._assetsToLoad = [];
-                return _this;
+        var ThreeReelSlot = /** @class */ (function (_super) {
+            __extends(ThreeReelSlot, _super);
+            function ThreeReelSlot() {
+                return _super.call(this) || this;
             }
-            Slot.prototype.addAsset = function (name, path) {
-                if (name === void 0) { name = ""; }
-                this._assetsToLoad.push([name, path]);
+            ThreeReelSlot.prototype.initialize = function () {
             };
-            return Slot;
-        }(PIXI.Container));
-        RoyalFlush.Slot = Slot;
+            return ThreeReelSlot;
+        }(dynomike.RoyalFlush.Slot));
+        RoyalFlush.ThreeReelSlot = ThreeReelSlot;
     })(RoyalFlush = dynomike.RoyalFlush || (dynomike.RoyalFlush = {}));
 })(dynomike || (dynomike = {}));
-//# sourceMappingURL=Slot.js.map
+//# sourceMappingURL=ThreeReelSlot.js.map

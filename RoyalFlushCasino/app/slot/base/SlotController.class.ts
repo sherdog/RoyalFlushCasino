@@ -1,5 +1,7 @@
 module dynomike.RoyalFlush {
-    export class SlotController {
+    export class SlotController extends PIXI.Container {
+
+        private _slotfactory: dynomike.RoyalFlush.SlotFactory;
 
         public STATE_LOADING: string = "GameStateLoading";
         public STATE_SPINNING: string = "GameStateSpinning";
@@ -13,13 +15,25 @@ module dynomike.RoyalFlush {
         //
         private _screen: PIXI.DisplayObject;
 
-        constructor(screen: PIXI.DisplayObject) {
-            this._screen = screen;
+        constructor() {
+            super();
+
+            this._slotfactory = new dynomike.RoyalFlush.SlotFactory();
+        }
+
+        public load() {
+            console.log("SlotController load called");
+
+            this._slotfactory = new dynomike.RoyalFlush.SlotFactory();
+            var slot = this._slotfactory.getSlot(dynomike.RoyalFlush.SlotTypes.SLOT_TRIPLE_DIAMOND);
+            this.addChild(slot);
         }
 
         public loadSlot(slot: string) {
             this._state = this.STATE_LOADING;
+            console.log('SlotController is laoding ' + slot);
 
+           
         }
 
         private onSlotLoaded() {

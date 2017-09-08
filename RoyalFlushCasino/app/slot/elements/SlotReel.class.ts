@@ -1,7 +1,6 @@
-s///<reference path="../../lib/pixi.d.ts" />
-
 module dynomike.RoyalFlush {
     export class SlotReel extends PIXI.Container {
+
         private symbol_1: PIXI.Sprite;
         private symbol_2: PIXI.Sprite;
         private symbol_3: PIXI.Sprite;
@@ -14,7 +13,7 @@ module dynomike.RoyalFlush {
         constructor() {
             super();
             this.populateReel();
-        }
+        } 
 
         private populateReel() {
 
@@ -46,27 +45,25 @@ module dynomike.RoyalFlush {
 
             this.mask = rect;
             this.addChild(rect);
-            console.log('container height' + this.symbolContainer.height);
             rect.y = (this.symbolContainer.y + (this.symbolContainer.height / 2)) - rect.height / 2;
         }
 
         private shuffle(array) {
 
-        var currentIndex = array.length, temporaryValue, randomIndex;
+            var currentIndex = array.length, temporaryValue, randomIndex;
 
-        while (0 !== currentIndex) {
+            while (0 !== currentIndex) {
 
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
 
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
         }
-
-        return array;
-    }
-
 
         private rand(min: number, max: number) {
             return Math.floor(Math.random() * (max - min + 1)) + min;

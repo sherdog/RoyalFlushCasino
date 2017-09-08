@@ -1,4 +1,3 @@
-///<reference path="../../lib/pixi.d.ts" />
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -13,7 +12,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var SlotReel = (function (_super) {
+        var SlotReel = /** @class */ (function (_super) {
             __extends(SlotReel, _super);
             function SlotReel() {
                 var _this = _super.call(this) || this;
@@ -44,7 +43,6 @@ var dynomike;
                 rect.drawRect(0, 0, 168, 230);
                 this.mask = rect;
                 this.addChild(rect);
-                console.log('container height' + this.symbolContainer.height);
                 rect.y = (this.symbolContainer.y + (this.symbolContainer.height / 2)) - rect.height / 2;
             };
             SlotReel.prototype.shuffle = function (array) {
