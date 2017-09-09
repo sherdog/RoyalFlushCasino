@@ -2,7 +2,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var SlotFactory = /** @class */ (function () {
+        var SlotFactory = (function () {
             function SlotFactory() {
                 this.slotDict = {};
                 this.initialize();

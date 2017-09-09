@@ -2,8 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\app",
-    "\\lib"
+    "\\app\\elements",
+    "\\app\\scenes",
+    "\\app\\scenes\\base",
+    "\\app\\slot",
+    "\\app\\slot\\base",
+    "\\app\\slot\\elements",
+    "\\app\\slot\\slots",
+    "\\app\\slot\\slots\\triple_diamond"
   ],
-  "SelectedNode": "\\app.ts",
+  "SelectedNode": "\\app\\slot\\elements\\SlotReel.ts",
   "PreviewInSolutionExplorer": false
 }

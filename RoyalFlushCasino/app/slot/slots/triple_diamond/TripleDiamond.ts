@@ -22,9 +22,9 @@ module dynomike.RoyalFlush {
             this.slotMachineBackground.position.y = 100;
             this.addChild(this.slotMachineBackground);
 
-            this.reel1 = new SlotReel();
-            this.reel2 = new SlotReel();
-            this.reel3 = new SlotReel();
+            this.reel1 = new SlotReel(1);
+            this.reel2 = new SlotReel(2);
+            this.reel3 = new SlotReel(3);
 
             this.reelContainer.addChild(this.reel1);
             this.reelContainer.addChild(this.reel2);
@@ -34,7 +34,7 @@ module dynomike.RoyalFlush {
 
             this.addChild(this.reelContainer);
             this.reelContainer.position.x = 165;
-            this.reelContainer.position.y = 138;
+            this.reelContainer.position.y = 175;
 
             this.reel1.position.x = 0;
             this.reel2.position.x = 220;

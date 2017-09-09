@@ -2,12 +2,12 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var SlotTypes = /** @class */ (function () {
+        var SlotTypes = (function () {
             function SlotTypes() {
             }
-            SlotTypes.SLOT_TRIPLE_DIAMOND = "tripleDiamond";
             return SlotTypes;
         }());
+        SlotTypes.SLOT_TRIPLE_DIAMOND = "tripleDiamond";
         RoyalFlush.SlotTypes = SlotTypes;
     })(RoyalFlush = dynomike.RoyalFlush || (dynomike.RoyalFlush = {}));
 })(dynomike || (dynomike = {}));

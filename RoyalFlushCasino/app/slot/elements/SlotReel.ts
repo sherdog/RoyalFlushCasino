@@ -3,6 +3,7 @@ module dynomike.RoyalFlush {
 
         private SYMBOL_HEIGHT = 165;
         private SYMBOL_WIDTH = 165;
+        private SYMBOL_SPACING = 25;
 
         private symbol_1: dynomike.RoyalFlush.SlotSymbol;
         private symbol_2: dynomike.RoyalFlush.SlotSymbol;
@@ -10,58 +11,96 @@ module dynomike.RoyalFlush {
         private symbol_4: dynomike.RoyalFlush.SlotSymbol;
         private symbol_5: dynomike.RoyalFlush.SlotSymbol;
 
-        private _symbolContainer: PIXI.Container;
-        private _symbolContainer2: PIXI.Container;
+        private maskWindow: PIXI.Graphics;
+
+        private _symbolContainer: PIXI.Container = new PIXI.Container;
+        private _symbolContainer2: PIXI.Container = new PIXI.Container;
+
+        private _reelStopPositions = [];
 
         private _symbolArray = [];
 
-        constructor() {
+        constructor(reelNumber: number) {
             super();
             this.populateReel();
         } 
 
         private populateReel() {
 
-            this._symbolContainer = new PIXI.Container();
-            this._symbolContainer2 = new PIXI.Container();
-
             this.addChild(this._symbolContainer);
             this.addChild(this._symbolContainer2);
 
-            this.symbol_1 = new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_DoubleBar.png'));
-            this.symbol_2 = new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_RedSeven.png'));
-            this.symbol_3 = new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_SingleBar.png'));
-            this.symbol_4 = new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_TripleBar.png'));
-            this.symbol_5 = new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_TripleDiamond.png'));
-
-            this._symbolArray = this.shuffle([this.symbol_1, this.symbol_2, this.symbol_3, this.symbol_4, this.symbol_5]);
+            // this.symbol_3, this.symbol_4, this.symbol_5]
+            this._symbolArray = this.shuffle([this.symbol_5, this.symbol_2, this.symbol_3]);
 
             var nextY: number = 0;
             var padding: number = 25;
 
-            for (var i = 0; i < this._symbolArray.length; i++) {
+            this._symbolContainer = this.createReel(this._symbolContainer);
+            this._symbolContainer.position.y = -100;
+            this._symbolContainer2 = this.createReel(this._symbolContainer2);
+            this._symbolContainer2.position.y = (this._symbolContainer.y + this._symbolContainer.height) + padding
 
-                (this._symbolArray[i] as PIXI.Sprite).position.y = nextY;
-
-                this._symbolContainer.addChild(this._symbolArray[i]);
-                this._symbolContainer2.addChild(this._symbolArray[i]);
-
-                nextY += this.SYMBOL_HEIGHT + padding;
-            }
             console.log('height of symbol container ' + this._symbolContainer.height);
-            this._symbolContainer.y = (-this._symbolContainer.height);
-            this._symbolContainer2.position.y = this._symbolContainer.y + this._symbolContainer.height;
+            console.log('width: ' + this._symbolContainer.width);
 
-            var rect = new PIXI.Graphics();
-            rect.beginFill(0xFF00);
-            rect.lineStyle(0, 0xFF0000);
-            rect.drawRect(4, 4, 165, 215);
+            var outline: PIXI.Graphics = new PIXI.Graphics();
+            outline.beginFill(0x000000, 0);
+            outline.lineStyle(3, 0xFF00);
+            outline.endFill();
+            this.addChild(outline);
 
-            //this.mask = rect;
-            this.addChild(rect);
-            rect.y = 175;
+            /*
+            var outline2: PIXI.Graphics = new PIXI.Graphics();
+            outline2.beginFill(0x000000, 0);
+            outline2.lineStyle(3, 0xFF0000);
+            outline2.drawRect(this._symbolContainer2.x, this._symbolContainer2.y, this._symbolContainer2.width, this._symbolContainer2.height);
+            outline2.endFill();
+            this.addChild(outline2);
+            */
+
+            console.log('reel cont y: ' + this._symbolContainer.y);
+            console.log('reel cont2 y: ' + this._symbolContainer2.y);
+
+            
+            var reelWindowMask = new PIXI.Graphics();
+            reelWindowMask.beginFill(0xFF00);
+            reelWindowMask.lineStyle(0, 0xFF0000);
+            reelWindowMask.drawRect(4, 4, 165, 215);
+           
+            //this.mask = reelWindowMask;
+            this.addChild(reelWindowMask);
+            reelWindowMask.visible = false;
+            reelWindowMask.y = 175;
         }
 
+        private createReel(container: PIXI.Container): PIXI.Container {
+            var array = [];
+            array.push(new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_SingleBar.png'), 1));
+            array.push(new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_DoubleBar.png'), 2));
+            array.push(new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_TripleBar.png'), 3));
+            array.push(new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_RedSeven.png'), 4));
+            array.push(new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_TripleDiamond.png'), 5));
+
+           // array = this.shuffle(array);
+
+            var positionY: number = 0;
+
+            for (var i = 0; i < array.length; i++)
+            {
+                container.addChild(array[i]);
+                (array[i] as dynomike.RoyalFlush.SlotSymbol).position.y = positionY;
+                positionY += (array[i] as dynomike.RoyalFlush.SlotSymbol).height + this.SYMBOL_SPACING;
+
+                if (!this._reelStopPositions.length) {
+                    var destY = 
+
+                    this._reelStopPositions.push(destY);
+                }
+            }
+
+            return container;
+        }
 
         public spin(rotations: number)
         {

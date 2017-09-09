@@ -14,7 +14,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var FakeScene = /** @class */ (function (_super) {
+        var FakeScene = (function (_super) {
             __extends(FakeScene, _super);
             function FakeScene(app) {
                 var _this = _super.call(this, app) || this;

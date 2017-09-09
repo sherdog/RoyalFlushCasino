@@ -2,7 +2,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var Controller = /** @class */ (function () {
+        var Controller = (function () {
             function Controller() {
             }
             return Controller;
