@@ -40,18 +40,27 @@ module dynomike.RoyalFlush {
             this.draw();
         }
 
+        public spin(finishPosition: number) {
+            this.startReelAnimation();
+        }
+
         public startReelAnimation() {
-            this._state = this.STATE_IDLE;
             var preChoosedPosition = this.getRandomPositions();
 
             for (var i = 0; i < this.reelArray.length; i++)
             {
                 var finishPos = (-preChoosedPosition[i] * this.TILE_HEIGHT);
-                this.reelArray[i].updatePosition(finishPos);
+                (this.reelArray[i] as dynomike.RoyalFlush.SlotReel).updatePosition(finishPos);
+
+                (this.reelArray[i] as dynomike.RoyalFlush.SlotReel);
             }
         }
 
         protected draw() {
+            var rotations = 5; //rotates the reel 5 times before stopping
+            var speed = 32;
+            
+
             requestAnimationFrame(this.draw.bind(this));
 
             if (this._state === this.STATE_SPINNING) {

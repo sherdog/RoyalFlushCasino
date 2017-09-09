@@ -38,15 +38,20 @@ var dynomike;
                 }
                 this.draw();
             };
+            SlotMachine.prototype.spin = function (finishPosition) {
+                this.startReelAnimation();
+            };
             SlotMachine.prototype.startReelAnimation = function () {
-                this._state = this.STATE_IDLE;
                 var preChoosedPosition = this.getRandomPositions();
                 for (var i = 0; i < this.reelArray.length; i++) {
                     var finishPos = (-preChoosedPosition[i] * this.TILE_HEIGHT);
                     this.reelArray[i].updatePosition(finishPos);
+                    this.reelArray[i];
                 }
             };
             SlotMachine.prototype.draw = function () {
+                var rotations = 5; //rotates the reel 5 times before stopping
+                var speed = 32;
                 requestAnimationFrame(this.draw.bind(this));
                 if (this._state === this.STATE_SPINNING) {
                     for (var i = 0; i < this.reelArray.length; i++) {
