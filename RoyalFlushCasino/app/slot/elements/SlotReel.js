@@ -25,19 +25,18 @@ var dynomike;
             SlotReel.prototype.populateReel = function () {
                 this.symbolContainer = new PIXI.Container();
                 this.addChild(this.symbolContainer);
-                this.symbol_1 = PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_DoubleBar.png');
-                this.symbol_2 = PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_RedSeven.png');
-                this.symbol_3 = PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_SingleBar.png');
-                this.symbol_4 = PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_TripleBar.png');
-                this.symbol_5 = PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_TripleDiamond.png');
-                this.symbolArray = [this.symbol_1, this.symbol_2, this.symbol_3, this.symbol_4, this.symbol_5];
-                this.symbolArray = this.shuffle(this.symbolArray);
+                this.symbol_1 = new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_DoubleBar.png'));
+                this.symbol_2 = new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_RedSeven.png'));
+                this.symbol_3 = new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_SingleBar.png'));
+                this.symbol_4 = new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_TripleBar.png'));
+                this.symbol_5 = new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_TripleDiamond.png'));
+                this.symbolArray = this.shuffle([this.symbol_1, this.symbol_2, this.symbol_3, this.symbol_4, this.symbol_5]);
                 var nextY = 0;
                 var padding = 25;
                 for (var i = 0; i < this.symbolArray.length; i++) {
                     this.symbolArray[i].position.y = nextY;
                     this.symbolContainer.addChild(this.symbolArray[i]);
-                    nextY += (this.symbolArray[i].height + padding);
+                    nextY += this.SYMBOL_HEIGHT + padding;
                 }
                 var rect = new PIXI.Graphics();
                 rect.beginFill(0xFF00);
@@ -45,16 +44,14 @@ var dynomike;
                 rect.drawRect(4, 4, 165, 215);
                 this.mask = rect;
                 this.addChild(rect);
-                this.symbolContainer.y = -(this.symbolContainer.height) + (this.SYMBOL_HEIGHT * 2);
                 rect.y = 175;
-                console.log('symbol container height: ' + (this.symbolContainer.height));
-                // rect.y = (this.symbolContainer.y + (this.symbolContainer.height / 2)) - rect.height / 2;
             };
             SlotReel.prototype.spin = function () {
                 this.symbolContainer.position.y = this.y + this.rand(-100, 100);
             };
-            SlotReel.prototype.update = function (positionY) {
-                this.symbolContainer.position.y += positionY;
+            SlotReel.prototype.updatePosition = function (positionY) {
+                //this.symbolContainer.position.y = positionY;
+                TweenMax.to(this.symbolContainer, 0.5, { "y": positionY, easing: "easeIn" });
             };
             SlotReel.prototype.shuffle = function (array) {
                 var currentIndex = array.length, temporaryValue, randomIndex;

@@ -3,7 +3,7 @@ window.onload = function () {
     var loader = PIXI.loader;
     var resources = PIXI.loader.resources;
     //Create Application
-    var app = new PIXI.Application(1170, 768, { backgroundColor: 0xffffff });
+    var app = new PIXI.Application(1170, 768, { backgroundColor: 0x000000 });
     document.body.appendChild(app.view);
     //pass the app to the scenemanager.
     sceneManager.init(app);

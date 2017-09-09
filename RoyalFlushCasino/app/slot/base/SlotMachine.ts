@@ -31,23 +31,23 @@ module dynomike.RoyalFlush {
 
         protected onSlotReady() {
             var preChoosedPosition = this.getRandomPositions();
-
             for (var i = 0; i < this.reelArray.length; i++) {
-                var finishPos = (-preChoosedPosition[i] * this.TILE_HEIGHT) + 25;
-                this.reelArray[i].tilePosition = finishPos
+                var finishPos = (-preChoosedPosition[i] * this.TILE_HEIGHT);
+
+                console.log('setting reel to position y: ' + finishPos);
             }
 
             this.draw();
         }
 
         public startReelAnimation() {
-            this._state = this.STATE_SPINNING;
+            this._state = this.STATE_IDLE;
             var preChoosedPosition = this.getRandomPositions();
 
             for (var i = 0; i < this.reelArray.length; i++)
             {
-                var finishPos = (-preChoosedPosition[i] * this.TILE_HEIGHT) + 25;
-                this.reelArray[i].tilePosition = finishPos
+                var finishPos = (-preChoosedPosition[i] * this.TILE_HEIGHT);
+                this.reelArray[i].updatePosition(finishPos);
             }
         }
 
@@ -58,7 +58,7 @@ module dynomike.RoyalFlush {
 
                 for (var i = 0; i < this.reelArray.length; i++)
                 {
-                    this.reelArray[i].update(1);
+                    this.reelArray[i].update(10);
                 }
             } else if (this._state === this.STATE_IDLE) {
                 
