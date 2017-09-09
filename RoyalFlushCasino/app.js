@@ -5,6 +5,10 @@ window.onload = function () {
     //Create Application
     var app = new PIXI.Application(1170, 768, { backgroundColor: 0x000000 });
     document.body.appendChild(app.view);
+    var meter = new FPSMeter();
+    var tick = new PIXI.ticker.Ticker();
+    tick.add(onTick);
+    tick.start();
     //pass the app to the scenemanager.
     sceneManager.init(app);
     //preload assets
@@ -12,6 +16,10 @@ window.onload = function () {
     addEventListener("onStartClicked", function () {
         sceneManager.gotoScene('game');
     });
+    function onTick() {
+        meter.tickStart();
+        meter.tick();
+    }
     function initializeAssets() {
         loader.add('sym1', 'assets/img/symbol_1.png')
             .add('sym2', 'assets/img/symbol_2.png')

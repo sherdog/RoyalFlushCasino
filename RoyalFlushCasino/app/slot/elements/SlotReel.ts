@@ -4,20 +4,23 @@ module dynomike.RoyalFlush {
         private SYMBOL_HEIGHT = 165;
         private SYMBOL_WIDTH = 165;
         private SYMBOL_SPACING = 25;
+        private REEL_SPIN_SPEED: number = 55;
 
-        private symbol_1: dynomike.RoyalFlush.SlotSymbol;
-        private symbol_2: dynomike.RoyalFlush.SlotSymbol;
-        private symbol_3: dynomike.RoyalFlush.SlotSymbol;
-        private symbol_4: dynomike.RoyalFlush.SlotSymbol;
-        private symbol_5: dynomike.RoyalFlush.SlotSymbol;
+        private STATE_SPINNING: number = 1;
+        private STATE_IDLE: number = 0;
+        private _state = this.STATE_IDLE;
 
-        private maskWindow: PIXI.Graphics;
-
+        private _maskWindow: PIXI.Graphics;
         private _symbolContainer: PIXI.Container = new PIXI.Container;
         private _symbolContainer2: PIXI.Container = new PIXI.Container;
+        private _outline: PIXI.Graphics;
+        private _outline2: PIXI.Graphics;
+        
+        private _minY: number;
+        private _maxY: number;
+        private _reelStartY: number;
 
         private _reelStopPositions = [];
-
         private _symbolArray = [];
 
         constructor(reelNumber: number) {
@@ -27,62 +30,45 @@ module dynomike.RoyalFlush {
 
         private populateReel() {
 
+            this._maskWindow = new PIXI.Graphics();
+            this._maskWindow.beginFill(0xFF00);
+            this._maskWindow.lineStyle(0, 0xFF0000);
+            this._maskWindow.drawRect(4, 4, 165, 215);
+
+            this.mask = this._maskWindow;
+            this.addChild(this._maskWindow);
+            this._maskWindow.visible = true;
+            this._maskWindow.y = 140;
+
+            this._minY = this._maskWindow.y;
+            this._maxY = this._maskWindow.y + this._maskWindow.height;
+            var nextY: number = 0;
+
             this.addChild(this._symbolContainer);
             this.addChild(this._symbolContainer2);
 
-            // this.symbol_3, this.symbol_4, this.symbol_5]
-            this._symbolArray = this.shuffle([this.symbol_5, this.symbol_2, this.symbol_3]);
-
-            var nextY: number = 0;
-            var padding: number = 25;
-
             this._symbolContainer = this.createReel(this._symbolContainer);
-            this._symbolContainer.position.y = -100;
+            this._symbolContainer.position.y = 0;
+
             this._symbolContainer2 = this.createReel(this._symbolContainer2);
-            this._symbolContainer2.position.y = (this._symbolContainer.y + this._symbolContainer.height) + padding
+            this._symbolContainer2.position.y = this._symbolContainer.y - this._symbolContainer2.height - this.SYMBOL_SPACING;
 
-            console.log('height of symbol container ' + this._symbolContainer.height);
-            console.log('width: ' + this._symbolContainer.width);
+            this._reelStartY = (this._minY + -(this._symbolContainer.height));
 
-            var outline: PIXI.Graphics = new PIXI.Graphics();
-            outline.beginFill(0x000000, 0);
-            outline.lineStyle(3, 0xFF00);
-            outline.endFill();
-            this.addChild(outline);
-
-            /*
-            var outline2: PIXI.Graphics = new PIXI.Graphics();
-            outline2.beginFill(0x000000, 0);
-            outline2.lineStyle(3, 0xFF0000);
-            outline2.drawRect(this._symbolContainer2.x, this._symbolContainer2.y, this._symbolContainer2.width, this._symbolContainer2.height);
-            outline2.endFill();
-            this.addChild(outline2);
-            */
-
-            console.log('reel cont y: ' + this._symbolContainer.y);
-            console.log('reel cont2 y: ' + this._symbolContainer2.y);
-
+            this.draw();
             
-            var reelWindowMask = new PIXI.Graphics();
-            reelWindowMask.beginFill(0xFF00);
-            reelWindowMask.lineStyle(0, 0xFF0000);
-            reelWindowMask.drawRect(4, 4, 165, 215);
-           
-            //this.mask = reelWindowMask;
-            this.addChild(reelWindowMask);
-            reelWindowMask.visible = false;
-            reelWindowMask.y = 175;
         }
 
         private createReel(container: PIXI.Container): PIXI.Container {
             var array = [];
+
             array.push(new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_SingleBar.png'), 1));
             array.push(new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_DoubleBar.png'), 2));
             array.push(new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_TripleBar.png'), 3));
             array.push(new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_RedSeven.png'), 4));
             array.push(new dynomike.RoyalFlush.SlotSymbol(PIXI.Sprite.fromImage('assets/img/tripleDiamonSlot_TripleDiamond.png'), 5));
 
-           // array = this.shuffle(array);
+           array = this.shuffle(array);
 
             var positionY: number = 0;
 
@@ -91,22 +77,46 @@ module dynomike.RoyalFlush {
                 container.addChild(array[i]);
                 (array[i] as dynomike.RoyalFlush.SlotSymbol).position.y = positionY;
                 positionY += (array[i] as dynomike.RoyalFlush.SlotSymbol).height + this.SYMBOL_SPACING;
-
-                if (!this._reelStopPositions.length) {
-                    var destY = 
-
-                    this._reelStopPositions.push(destY);
-                }
             }
 
             return container;
         }
 
+        private draw() {
+
+            requestAnimationFrame(this.draw.bind(this));
+
+            if (this._state === this.STATE_SPINNING)
+            {
+                this._symbolContainer.position.y += this.REEL_SPIN_SPEED;
+                this._symbolContainer2.position.y += this.REEL_SPIN_SPEED;
+
+                if (this._symbolContainer.y > this._maxY) {
+                    this._symbolContainer.position.y = this._symbolContainer2.y - this._symbolContainer.height - this.SYMBOL_SPACING;
+                }
+
+                if (this._symbolContainer2.y > this._maxY) {
+                    this._symbolContainer2.position.y = this._symbolContainer.y - this._symbolContainer2.height - this.SYMBOL_SPACING;
+                }
+            }
+        }
+
+        public stop() {
+            console.log('stop called on reel');
+            this._symbolContainer.filters = null;
+            this._symbolContainer2.filters = null;
+
+            this._state = this.STATE_IDLE;
+        }
+
         public spin(rotations: number)
         {
-            //this._symbolContainer.position.y = positionY;
-            //TweenMax.to(this._symbolContainer, 0.5, { "y": positionY, easing: "easeIn" });
-
+            console.log('spin called on reel');
+            var blurFilter = new PIXI.filters.BlurFilter(5);
+            this._symbolContainer.filters = [blurFilter];
+            this._symbolContainer2.filters = [blurFilter];
+            
+            this._state = this.STATE_SPINNING;
         }
 
         private shuffle(array) {

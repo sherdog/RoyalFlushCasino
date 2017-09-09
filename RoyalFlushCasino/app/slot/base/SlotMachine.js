@@ -12,7 +12,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var SlotMachine = /** @class */ (function (_super) {
+        var SlotMachine = (function (_super) {
             __extends(SlotMachine, _super);
             function SlotMachine() {
                 var _this = _super.call(this) || this;
@@ -34,25 +34,13 @@ var dynomike;
                 var preChoosedPosition = this.getRandomPositions();
                 for (var i = 0; i < this.reelArray.length; i++) {
                     var finishPos = (-preChoosedPosition[i] * this.TILE_HEIGHT);
-                    console.log('setting reel to position y: ' + finishPos);
                 }
-                this.draw();
-            };
-            SlotMachine.prototype.spin = function (finishPosition) {
-                this.startReelAnimation();
-            };
-            SlotMachine.prototype.startReelAnimation = function () {
-                var preChoosedPosition = this.getRandomPositions();
-                for (var i = 0; i < this.reelArray.length; i++) {
-                    var finishPos = (-preChoosedPosition[i] * this.TILE_HEIGHT);
-                    this.reelArray[i].updatePosition(finishPos);
-                    this.reelArray[i];
-                }
+                // this.draw();
             };
             SlotMachine.prototype.draw = function () {
                 var rotations = 5; //rotates the reel 5 times before stopping
                 var speed = 32;
-                requestAnimationFrame(this.draw.bind(this));
+                // requestAnimationFrame(this.draw.bind(this));
                 if (this._state === this.STATE_SPINNING) {
                     for (var i = 0; i < this.reelArray.length; i++) {
                         this.reelArray[i].update(10);

@@ -33,27 +33,9 @@ module dynomike.RoyalFlush {
             var preChoosedPosition = this.getRandomPositions();
             for (var i = 0; i < this.reelArray.length; i++) {
                 var finishPos = (-preChoosedPosition[i] * this.TILE_HEIGHT);
-
-                console.log('setting reel to position y: ' + finishPos);
             }
 
-            this.draw();
-        }
-
-        public spin(finishPosition: number) {
-            this.startReelAnimation();
-        }
-
-        public startReelAnimation() {
-            var preChoosedPosition = this.getRandomPositions();
-
-            for (var i = 0; i < this.reelArray.length; i++)
-            {
-                var finishPos = (-preChoosedPosition[i] * this.TILE_HEIGHT);
-                (this.reelArray[i] as dynomike.RoyalFlush.SlotReel).updatePosition(finishPos);
-
-                (this.reelArray[i] as dynomike.RoyalFlush.SlotReel);
-            }
+           // this.draw();
         }
 
         protected draw() {
@@ -61,7 +43,7 @@ module dynomike.RoyalFlush {
             var speed = 32;
             
 
-            requestAnimationFrame(this.draw.bind(this));
+           // requestAnimationFrame(this.draw.bind(this));
 
             if (this._state === this.STATE_SPINNING) {
 

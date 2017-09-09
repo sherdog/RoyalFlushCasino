@@ -52,7 +52,20 @@ var dynomike;
                 _super.prototype.initialize.call(this);
             };
             TripleDiamond.prototype.onSpinClickHandler = function (event) {
-                this.startReelAnimation();
+                console.log('state: ' + this._state);
+                if (this._state === this.STATE_SPINNING) {
+                    this._state = this.STATE_IDLE;
+                    for (var i = 0; i < this.reelArray.length; i++) {
+                        this.reelArray[i].stop();
+                    }
+                }
+                else {
+                    for (var i = 0; i < this.reelArray.length; i++) {
+                        console.log('calling spin');
+                        this.reelArray[i].spin(4);
+                    }
+                    this._state = this.STATE_SPINNING;
+                }
             };
             return TripleDiamond;
         }(dynomike.RoyalFlush.SlotMachine));

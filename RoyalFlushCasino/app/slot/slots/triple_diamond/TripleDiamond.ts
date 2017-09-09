@@ -54,7 +54,23 @@ module dynomike.RoyalFlush {
         }
 
         protected onSpinClickHandler(event) {
-            this.startReelAnimation();
+            console.log('state: ' + this._state);
+            if (this._state === this.STATE_SPINNING)
+            {
+                this._state = this.STATE_IDLE;
+                for (var i = 0; i < this.reelArray.length; i++) {
+                    (this.reelArray[i] as dynomike.RoyalFlush.SlotReel).stop();
+                }
+            }
+            else
+            {
+                for (var i = 0; i < this.reelArray.length; i++) {
+                    console.log('calling spin');
+                    (this.reelArray[i] as dynomike.RoyalFlush.SlotReel).spin(4);
+                }
+
+                this._state = this.STATE_SPINNING;
+            }
         }
     }
 }

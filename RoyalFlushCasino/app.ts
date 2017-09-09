@@ -1,4 +1,5 @@
 ﻿window.onload = function () {
+
     var sceneManager = dynomike.RoyalFlush.SceneManager;
     var loader = PIXI.loader;
     var resources = PIXI.loader.resources;
@@ -7,6 +8,10 @@
     var app = new PIXI.Application(1170, 768, { backgroundColor: 0x000000 });
     document.body.appendChild(app.view);
 
+    var meter = new FPSMeter();
+    var tick: PIXI.ticker.Ticker = new PIXI.ticker.Ticker();
+    tick.add(onTick);
+    tick.start();
     //pass the app to the scenemanager.
     sceneManager.init(app);
 
@@ -16,6 +21,11 @@
     addEventListener("onStartClicked", function () {
         sceneManager.gotoScene('game');
     });
+
+    function onTick() {
+        meter.tickStart();
+        meter.tick();
+    }
 
     function initializeAssets() {
 
@@ -41,4 +51,7 @@
 
         sceneManager.gotoScene('game');
     }
+
+   
+
 }
