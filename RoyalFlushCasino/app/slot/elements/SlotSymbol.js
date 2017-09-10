@@ -12,7 +12,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var SlotSymbol = (function (_super) {
+        var SlotSymbol = /** @class */ (function (_super) {
             __extends(SlotSymbol, _super);
             function SlotSymbol(symbolImage, symbolID) {
                 var _this = _super.call(this) || this;

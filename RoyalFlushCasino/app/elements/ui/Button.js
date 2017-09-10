@@ -12,7 +12,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var Button = (function (_super) {
+        var Button = /** @class */ (function (_super) {
             __extends(Button, _super);
             function Button(outTexture, overTexture, onClickCallback) {
                 var _this = _super.call(this) || this;

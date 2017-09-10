@@ -55,6 +55,7 @@ module dynomike.RoyalFlush {
 
         protected onSpinClickHandler(event) {
             console.log('state: ' + this._state);
+
             if (this._state === this.STATE_SPINNING)
             {
                 this._state = this.STATE_IDLE;

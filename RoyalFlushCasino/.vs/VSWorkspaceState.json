@@ -3,14 +3,15 @@
     "",
     "\\app",
     "\\app\\elements",
-    "\\app\\scenes",
-    "\\app\\scenes\\base",
+    "\\app\\elements\\ui",
+    "\\app\\models",
+    "\\app\\scenes\\tranistion",
     "\\app\\slot",
     "\\app\\slot\\base",
     "\\app\\slot\\elements",
     "\\app\\slot\\slots",
-    "\\app\\slot\\slots\\triple_diamond"
+    "\\lib"
   ],
-  "SelectedNode": "\\app\\slot\\elements\\SlotReel.ts",
+  "SelectedNode": "\\app\\elements\\ProgressBar.js",
   "PreviewInSolutionExplorer": false
 }

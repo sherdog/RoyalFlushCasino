@@ -13,7 +13,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var TripleDiamond = (function (_super) {
+        var TripleDiamond = /** @class */ (function (_super) {
             __extends(TripleDiamond, _super);
             function TripleDiamond() {
                 var _this = _super.call(this) || this;

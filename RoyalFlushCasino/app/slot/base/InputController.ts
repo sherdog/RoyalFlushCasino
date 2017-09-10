@@ -101,11 +101,9 @@ module dynomike.RoyalFlush {
                     gameStatus = STATE_INIT;
                 } else
                     if (gameStatus == STATE_INIT) {
-                        console.log("waiting start");
                         gameStatus = STATE_CHECK_WIN;
 
                     } else if (gameStatus == STATE_MOVING) {
-                        console.log("moving");
 
                         for (var i = 0; i < SLOT_NUMBER; i++) {
                             if (finalTileY[i] > 0) {

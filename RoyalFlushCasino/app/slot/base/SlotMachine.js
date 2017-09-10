@@ -12,7 +12,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var SlotMachine = (function (_super) {
+        var SlotMachine = /** @class */ (function (_super) {
             __extends(SlotMachine, _super);
             function SlotMachine() {
                 var _this = _super.call(this) || this;
@@ -38,9 +38,6 @@ var dynomike;
                 // this.draw();
             };
             SlotMachine.prototype.draw = function () {
-                var rotations = 5; //rotates the reel 5 times before stopping
-                var speed = 32;
-                // requestAnimationFrame(this.draw.bind(this));
                 if (this._state === this.STATE_SPINNING) {
                     for (var i = 0; i < this.reelArray.length; i++) {
                         this.reelArray[i].update(10);

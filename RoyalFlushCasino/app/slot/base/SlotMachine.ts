@@ -39,14 +39,7 @@ module dynomike.RoyalFlush {
         }
 
         protected draw() {
-            var rotations = 5; //rotates the reel 5 times before stopping
-            var speed = 32;
-            
-
-           // requestAnimationFrame(this.draw.bind(this));
-
             if (this._state === this.STATE_SPINNING) {
-
                 for (var i = 0; i < this.reelArray.length; i++)
                 {
                     this.reelArray[i].update(10);

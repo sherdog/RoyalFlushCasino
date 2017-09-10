@@ -13,7 +13,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var GameScene = (function (_super) {
+        var GameScene = /** @class */ (function (_super) {
             __extends(GameScene, _super);
             function GameScene(app) {
                 var _this = _super.call(this, app) || this;
