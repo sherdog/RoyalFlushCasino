@@ -1,17 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\app",
-    "\\app\\elements",
-    "\\app\\elements\\ui",
-    "\\app\\models",
-    "\\app\\scenes\\tranistion",
-    "\\app\\slot",
-    "\\app\\slot\\base",
-    "\\app\\slot\\elements",
-    "\\app\\slot\\slots",
-    "\\lib"
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\elements",
+    "\\src\\app\\models",
+    "\\src\\core\\utils",
+    "\\www\\app",
+    "\\www\\app\\slot",
+    "\\www\\app\\slot\\slots",
+    "\\www\\app\\slot\\slots\\triple_diamond"
   ],
-  "SelectedNode": "\\app\\elements\\ProgressBar.js",
+  "SelectedNode": "\\src\\app\\slot\\elements\\SlotReel.ts",
   "PreviewInSolutionExplorer": false
 }

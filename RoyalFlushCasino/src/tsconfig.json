@@ -1,0 +1,10 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "types": [],
+    "sourceMap": true,
+    "outDir": "../www/",
+    "target": "es5",
+    "noEmitOnError": true
+  }
+}
