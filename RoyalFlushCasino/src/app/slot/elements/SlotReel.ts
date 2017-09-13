@@ -64,8 +64,7 @@ module dynomike.RoyalFlush {
           
             this._stopHeight = firstStop.height;
 
-            this._stepSpeed = 168 / 5;
-            console.log('setting speedd to ' + 168 / 5);
+            this._stepSpeed = 20 / 5;
 
             for (var i = 0; i < this._stops.length; i++) {
                 var stop: dynomike.RoyalFlush.SlotSymbol = this._stops[i];
@@ -104,7 +103,6 @@ module dynomike.RoyalFlush {
                 if (stop.y - this._padding > this._maxY) {
 
                     if (i + 1 == this._stopSprites.length) {
-                        console.log('ADding 1 to rolling count ' + this._rollingCount);
                         this._rollingCount++;
                     }
 
@@ -115,32 +113,30 @@ module dynomike.RoyalFlush {
                 if (this._stopAfterRollingCount === this._rollingCount && i === this._winningIndex) {
                     if (stop.y >= this._paylineRowY) {
                         if (this._winningIndex === 0) {
-                            this._tailSymbol.position.y = stop.y + stop.height;
+                            this._tailSymbol.position.y = stop.y + stop.height - this._padding;
                             this._tailSymbol = this._stopSprites[this._stopSprites.length - 2];
                         }
+
                         this.resetYPosition(stop);
                         this._isRollingComplete = true;
-
-                        //Dispatch event of spin complete
                     }
                 }
             }
         }
 
         public stop(symbolID: number = 1) {
-
             symbolID = this.getRandomInt(1, 5);
             this._state = this.STATE_STOPPING;
         }
 
         private resetYPosition(currentStop: dynomike.RoyalFlush.SlotSymbol): void {
             //adjusts the Y position on all y's after stop
-
-            var deltaY = currentStop.y - this._paylineRowY + currentStop.height / 2;
+            var deltaY = currentStop.y - this._paylineRowY + (currentStop.height / 2);
 
             for (var i = 0; i < this._stopSprites.length; i++) {
                 var newStop: dynomike.RoyalFlush.SlotSymbol = this._stopSprites[i];
-                newStop.y = newStop.y - deltaY;
+                console.log('setting ' + newStop.symbolID + ' to ' + (newStop.y - deltaY));
+                newStop.position.y = newStop.y - deltaY;
             }
         }
 
@@ -158,7 +154,8 @@ module dynomike.RoyalFlush {
 
             var randomValue: number = 1; //gets PRNG number value
 
-            this._winningIndex = randomValue % this._stops.length;
+            this._winningIndex = 2;
+            //randomValue % this._stops.length;
             this._isRollingComplete = false;
         }
 
