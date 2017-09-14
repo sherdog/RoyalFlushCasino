@@ -82,7 +82,10 @@ module dynomike.RoyalFlush {
                     (this.reelArray[i] as dynomike.RoyalFlush.SlotReel).spin();
                 }
 
+                TweenMax.delayedCall(1.0, this.onTimerEnd.bind(this));
+
             } else {
+                TweenMax.killDelayedCallsTo(this.onTimerEnd.bind(this));
                 this._state = this.STATE_IDLE;
 
                 for (var i = 0; i < this.reelArray.length; i++) {
@@ -91,6 +94,15 @@ module dynomike.RoyalFlush {
                     var winningIndex = randomValue % reelLen;
                     TweenMax.delayedCall((0.5 * i), this.stopReel.bind(this), [i, winningIndex]);
                 }
+            }
+        }
+
+        private onTimerEnd(): void {
+            for (var i = 0; i < this.reelArray.length; i++) {
+                var reelLen: number = (this.reelArray[i] as dynomike.RoyalFlush.SlotReel).stopCount;
+                var randomValue = this.rand(this._prngMinRange, this._prngMaxRange);
+                var winningIndex = randomValue % reelLen;
+                TweenMax.delayedCall((0.5 * i), this.stopReel.bind(this), [i, winningIndex]);
             }
         }
 

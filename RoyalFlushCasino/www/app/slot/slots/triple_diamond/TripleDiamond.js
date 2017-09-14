@@ -69,8 +69,10 @@ var dynomike;
                     for (var i = 0; i < this.reelArray.length; i++) {
                         this.reelArray[i].spin();
                     }
+                    TweenMax.delayedCall(1.0, this.onTimerEnd.bind(this));
                 }
                 else {
+                    TweenMax.killDelayedCallsTo(this.onTimerEnd.bind(this));
                     this._state = this.STATE_IDLE;
                     for (var i = 0; i < this.reelArray.length; i++) {
                         var reelLen = this.reelArray[i].stopCount;
@@ -78,6 +80,14 @@ var dynomike;
                         var winningIndex = randomValue % reelLen;
                         TweenMax.delayedCall((0.5 * i), this.stopReel.bind(this), [i, winningIndex]);
                     }
+                }
+            };
+            TripleDiamond.prototype.onTimerEnd = function () {
+                for (var i = 0; i < this.reelArray.length; i++) {
+                    var reelLen = this.reelArray[i].stopCount;
+                    var randomValue = this.rand(this._prngMinRange, this._prngMaxRange);
+                    var winningIndex = randomValue % reelLen;
+                    TweenMax.delayedCall((0.5 * i), this.stopReel.bind(this), [i, winningIndex]);
                 }
             };
             TripleDiamond.prototype.stopReel = function (reelIndex, winningIndex) {
