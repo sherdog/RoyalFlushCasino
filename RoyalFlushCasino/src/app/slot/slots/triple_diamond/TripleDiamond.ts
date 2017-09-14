@@ -98,6 +98,7 @@ module dynomike.RoyalFlush {
         }
 
         private onTimerEnd(): void {
+            this._state = this.STATE_IDLE;
             for (var i = 0; i < this.reelArray.length; i++) {
                 var reelLen: number = (this.reelArray[i] as dynomike.RoyalFlush.SlotReel).stopCount;
                 var randomValue = this.rand(this._prngMinRange, this._prngMaxRange);

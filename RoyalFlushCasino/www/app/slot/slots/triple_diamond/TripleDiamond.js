@@ -83,6 +83,7 @@ var dynomike;
                 }
             };
             TripleDiamond.prototype.onTimerEnd = function () {
+                this._state = this.STATE_IDLE;
                 for (var i = 0; i < this.reelArray.length; i++) {
                     var reelLen = this.reelArray[i].stopCount;
                     var randomValue = this.rand(this._prngMinRange, this._prngMaxRange);
