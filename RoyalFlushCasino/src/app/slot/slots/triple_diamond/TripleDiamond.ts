@@ -13,6 +13,9 @@ module dynomike.RoyalFlush {
         protected _reel2Symbols = [];
         protected _reel3Symbols = [];
 
+        private _prngMinRange: number = 1;
+        private _prngMaxRange: number = 1000000000;
+
         protected _reelPositions: Array<number> = [0, 220, 440];
 
         constructor() {
@@ -71,20 +74,32 @@ module dynomike.RoyalFlush {
 
         protected onSpinClickHandler(event) {
 
-            if (this._state === this.STATE_SPINNING)
+            if (this._state === this.STATE_IDLE)
             {
-                this._state = this.STATE_IDLE;
-                for (var i = 0; i < this.reelArray.length; i++) {
-                    (this.reelArray[i] as dynomike.RoyalFlush.SlotReel).stop();
-                }
-            }
-            else
-            {
-                for (var i = 0; i < this.reelArray.length; i++) {
-                    (this.reelArray[i] as dynomike.RoyalFlush.SlotReel).spin(4);
-                }
                 this._state = this.STATE_SPINNING;
+
+                for (var i = 0; i < this.reelArray.length; i++) {
+                    (this.reelArray[i] as dynomike.RoyalFlush.SlotReel).spin();
+                }
+
+            } else {
+                this._state = this.STATE_IDLE;
+
+                for (var i = 0; i < this.reelArray.length; i++) {
+                    var reelLen: number = (this.reelArray[i] as dynomike.RoyalFlush.SlotReel).stopCount;
+                    var randomValue = this.rand(this._prngMinRange, this._prngMaxRange);
+                    var winningIndex = randomValue % reelLen;
+                    TweenMax.delayedCall((0.5 * i), this.stopReel.bind(this), [i, winningIndex]);
+                }
             }
+        }
+
+        protected stopReel(reelIndex, winningIndex) {
+            (this.reelArray[reelIndex] as dynomike.RoyalFlush.SlotReel).stop(winningIndex);
+        }
+
+        private rand(min: number, max: number) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
         }
     }
 }

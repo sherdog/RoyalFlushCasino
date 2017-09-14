@@ -25,15 +25,10 @@ var dynomike;
                 if (symbols === void 0) { symbols = []; }
                 var spriteArray = [];
                 spriteArray[1] = 'assets/img/tripleDiamonSlot_SingleBar.png';
-                //new PIXI.Sprite.fromImage();
                 spriteArray[2] = 'assets/img/tripleDiamonSlot_DoubleBar.png';
-                //new PIXI.Sprite.fromImage()
                 spriteArray[3] = 'assets/img/tripleDiamonSlot_TripleBar.png';
-                //new PIXI.Sprite.fromImage();
                 spriteArray[4] = 'assets/img/tripleDiamonSlot_RedSeven.png';
-                //new PIXI.Sprite.fromImage();
                 spriteArray[5] = 'assets/img/tripleDiamonSlot_TripleDiamond.png';
-                //new PIXI.Sprite.fromImage();
                 var returnArray = [];
                 symbols = this.shuffle(symbols);
                 for (var i = 0; i < symbols.length; i++) {

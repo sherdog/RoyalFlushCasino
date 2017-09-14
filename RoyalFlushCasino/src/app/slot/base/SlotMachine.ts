@@ -1,7 +1,6 @@
 module dynomike.RoyalFlush {
     export class SlotMachine extends PIXI.Container {
 
-        protected _state: string = "StateIdle";
         protected slotMachineBackground: PIXI.Sprite;
         protected _spinButton: dynomike.RoyalFlush.Button;
         protected reelContainer: PIXI.Container;
@@ -17,9 +16,10 @@ module dynomike.RoyalFlush {
         protected TILE_WIDTH = 100
         protected TILE_HEIGHT = this.TILE_WIDTH;
 
-        protected STATE_SPINNING = "SlotSpinning";
-        protected STATE_IDLE = "SlotIdle";
-        protected STATE_VALIDATING_SPIN = "SlotValidatingSpin";
+        protected STATE_SPINNING = 1;
+        protected STATE_IDLE = 0;
+
+        protected _state: number = this.STATE_IDLE;
 
         protected reelArray = [];
 
@@ -44,16 +44,7 @@ module dynomike.RoyalFlush {
         }
 
         protected draw() {
-            if (this._state === this.STATE_SPINNING) {
-                for (var i = 0; i < this.reelArray.length; i++)
-                {
-                    this.reelArray[i].update(10);
-                }
-            } else if (this._state === this.STATE_IDLE) {
-                
-            } else if (this._state === this.STATE_VALIDATING_SPIN) {
-
-            }
+           //update the input controller. and set disabled i think
         }
 
         protected getRandomPositions() {

@@ -16,12 +16,11 @@ var dynomike;
             __extends(SlotMachine, _super);
             function SlotMachine() {
                 var _this = _super.call(this) || this;
-                _this._state = "StateIdle";
                 _this.TILE_WIDTH = 100;
                 _this.TILE_HEIGHT = _this.TILE_WIDTH;
-                _this.STATE_SPINNING = "SlotSpinning";
-                _this.STATE_IDLE = "SlotIdle";
-                _this.STATE_VALIDATING_SPIN = "SlotValidatingSpin";
+                _this.STATE_SPINNING = 1;
+                _this.STATE_IDLE = 0;
+                _this._state = _this.STATE_IDLE;
                 _this.reelArray = [];
                 _this.initialize();
                 return _this;
@@ -38,15 +37,7 @@ var dynomike;
                 // this.draw();
             };
             SlotMachine.prototype.draw = function () {
-                if (this._state === this.STATE_SPINNING) {
-                    for (var i = 0; i < this.reelArray.length; i++) {
-                        this.reelArray[i].update(10);
-                    }
-                }
-                else if (this._state === this.STATE_IDLE) {
-                }
-                else if (this._state === this.STATE_VALIDATING_SPIN) {
-                }
+                //update the input controller. and set disabled i think
             };
             SlotMachine.prototype.getRandomPositions = function () {
                 var x = this.getRandomInt(0, 100);

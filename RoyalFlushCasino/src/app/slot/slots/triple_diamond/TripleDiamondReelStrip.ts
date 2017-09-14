@@ -13,15 +13,10 @@ module dynomike.RoyalFlush {
 
             var spriteArray = [];
             spriteArray[1] = 'assets/img/tripleDiamonSlot_SingleBar.png';
-            //new PIXI.Sprite.fromImage();
             spriteArray[2] = 'assets/img/tripleDiamonSlot_DoubleBar.png';
-            //new PIXI.Sprite.fromImage()
             spriteArray[3] = 'assets/img/tripleDiamonSlot_TripleBar.png';
-            //new PIXI.Sprite.fromImage();
             spriteArray[4] = 'assets/img/tripleDiamonSlot_RedSeven.png';
-            //new PIXI.Sprite.fromImage();
             spriteArray[5] = 'assets/img/tripleDiamonSlot_TripleDiamond.png';
-            //new PIXI.Sprite.fromImage();
 
             var returnArray: Array<dynomike.RoyalFlush.SlotSymbol> = [];
 
@@ -30,7 +25,6 @@ module dynomike.RoyalFlush {
             for (var i = 0; i < symbols.length; i++) {
                 var img = spriteArray[symbols[i]];
                 let spr = PIXI.Sprite.fromImage(img);
-                
                 var tmpSym: dynomike.RoyalFlush.SlotSymbol = new dynomike.RoyalFlush.SlotSymbol(spr, symbols[i], i);
                 tmpSym.pivot.set(tmpSym.width / 2, tmpSym.height / 2);
                 returnArray.push(tmpSym);
@@ -42,7 +36,6 @@ module dynomike.RoyalFlush {
 
         //Returns object with id =>, position;
         public getStripStopPoints(): Array<object> {
-
             return [];
         }
 

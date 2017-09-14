@@ -23,6 +23,8 @@ var dynomike;
                 _this._reel1Symbols = [];
                 _this._reel2Symbols = [];
                 _this._reel3Symbols = [];
+                _this._prngMinRange = 1;
+                _this._prngMaxRange = 1000000000;
                 _this._reelPositions = [0, 220, 440];
                 return _this;
             }
@@ -62,18 +64,27 @@ var dynomike;
                 _super.prototype.initialize.call(this);
             };
             TripleDiamond.prototype.onSpinClickHandler = function (event) {
-                if (this._state === this.STATE_SPINNING) {
-                    this._state = this.STATE_IDLE;
+                if (this._state === this.STATE_IDLE) {
+                    this._state = this.STATE_SPINNING;
                     for (var i = 0; i < this.reelArray.length; i++) {
-                        this.reelArray[i].stop();
+                        this.reelArray[i].spin();
                     }
                 }
                 else {
+                    this._state = this.STATE_IDLE;
                     for (var i = 0; i < this.reelArray.length; i++) {
-                        this.reelArray[i].spin(4);
+                        var reelLen = this.reelArray[i].stopCount;
+                        var randomValue = this.rand(this._prngMinRange, this._prngMaxRange);
+                        var winningIndex = randomValue % reelLen;
+                        TweenMax.delayedCall((0.5 * i), this.stopReel.bind(this), [i, winningIndex]);
                     }
-                    this._state = this.STATE_SPINNING;
                 }
+            };
+            TripleDiamond.prototype.stopReel = function (reelIndex, winningIndex) {
+                this.reelArray[reelIndex].stop(winningIndex);
+            };
+            TripleDiamond.prototype.rand = function (min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
             };
             return TripleDiamond;
         }(dynomike.RoyalFlush.SlotMachine));
