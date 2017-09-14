@@ -26,10 +26,10 @@ var dynomike;
                 _this._isRollingComplete = false;
                 _this._stepSpeed = 5;
                 _this._stopHeight = 0;
-                _this._padding = 15;
+                _this._padding = 0;
                 _this.SYMBOL_HEIGHT = 165;
                 _this.SYMBOL_WIDTH = 165;
-                _this.SYMBOL_SPACING = 25;
+                _this.SYMBOL_SPACING = 10;
                 _this.REEL_SPIN_SPEED = 2;
                 _this.STATE_IDLE = 0;
                 _this.STATE_SPINNING = 1;
@@ -91,7 +91,7 @@ var dynomike;
                 for (var i = 0; i < this._stopSprites.length; i++) {
                     var stop = this._stopSprites[i];
                     stop.position.y = stop.y + this._stepSpeed;
-                    if (stop.y > this._maxY + this._padding + 20) {
+                    if (stop.y > this._maxY + this._padding + 80) {
                         stop.position.y = this._tailSymbol.y - this._tailSymbol.height - (stop.height / 2) - this._padding;
                         this._tailSymbol = stop;
                     }

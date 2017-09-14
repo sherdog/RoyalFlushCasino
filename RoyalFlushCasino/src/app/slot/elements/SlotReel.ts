@@ -15,11 +15,11 @@ module dynomike.RoyalFlush {
         private _isRollingComplete: boolean = false;
         private _stepSpeed: number = 5;
         private _stopHeight: number = 0;
-        private _padding: number = 15;
+        private _padding: number = 0;
 
         private SYMBOL_HEIGHT = 165;
         private SYMBOL_WIDTH = 165;
-        private SYMBOL_SPACING = 25;
+        private SYMBOL_SPACING = 10;
         private REEL_SPIN_SPEED: number = 2;
 
         private STATE_IDLE: number = 0;
@@ -115,7 +115,7 @@ module dynomike.RoyalFlush {
                 var stop: dynomike.RoyalFlush.SlotSymbol = this._stopSprites[i];
                 stop.position.y = stop.y + this._stepSpeed;
 
-                if (stop.y > this._maxY + this._padding + 20) {
+                if (stop.y > this._maxY + this._padding + 80) {
                     stop.position.y = this._tailSymbol.y - this._tailSymbol.height - (stop.height / 2) - this._padding;
                     this._tailSymbol = stop;
                 }
