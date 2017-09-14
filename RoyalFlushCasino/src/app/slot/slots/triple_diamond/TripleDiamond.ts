@@ -70,7 +70,6 @@ module dynomike.RoyalFlush {
         }
 
         protected onSpinClickHandler(event) {
-            console.log('state: ' + this._state);
 
             if (this._state === this.STATE_SPINNING)
             {
@@ -84,7 +83,6 @@ module dynomike.RoyalFlush {
                 for (var i = 0; i < this.reelArray.length; i++) {
                     (this.reelArray[i] as dynomike.RoyalFlush.SlotReel).spin(4);
                 }
-
                 this._state = this.STATE_SPINNING;
             }
         }

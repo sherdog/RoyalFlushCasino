@@ -62,7 +62,6 @@ var dynomike;
                 _super.prototype.initialize.call(this);
             };
             TripleDiamond.prototype.onSpinClickHandler = function (event) {
-                console.log('state: ' + this._state);
                 if (this._state === this.STATE_SPINNING) {
                     this._state = this.STATE_IDLE;
                     for (var i = 0; i < this.reelArray.length; i++) {

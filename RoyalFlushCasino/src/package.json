@@ -13,7 +13,7 @@
   },
   "license": "ISC",
   "main": "./dist/bundle.js",
-  "name": "Royal Flush Casino",
+  "name": "pixitest",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
