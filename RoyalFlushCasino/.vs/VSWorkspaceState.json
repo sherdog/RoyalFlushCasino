@@ -5,12 +5,10 @@
     "\\src\\app",
     "\\src\\app\\elements",
     "\\src\\app\\models",
-    "\\src\\core\\utils",
-    "\\www\\app",
-    "\\www\\app\\slot",
-    "\\www\\app\\slot\\slots",
-    "\\www\\app\\slot\\slots\\triple_diamond"
+    "\\src\\app\\slot",
+    "\\src\\app\\slot\\base",
+    "\\src\\app\\slot\\elements"
   ],
-  "SelectedNode": "\\src\\app\\slot\\elements\\SlotReel.ts",
+  "SelectedNode": "\\src\\app\\slot\\elements\\SlotSymbol.ts",
   "PreviewInSolutionExplorer": false
 }

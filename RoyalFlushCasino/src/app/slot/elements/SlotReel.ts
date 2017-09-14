@@ -14,7 +14,10 @@ module dynomike.RoyalFlush {
         private _isRollingComplete: boolean = false;
         private _stepSpeed: number = 5;
         private _stopHeight: number = 0;
-        private _padding: number = 25;
+        private _padding: number = 15;
+
+        private _prngMinRange: number = 1;
+        private _prngMaxRange: number = 1000000000;
 
         private SYMBOL_HEIGHT = 165;
         private SYMBOL_WIDTH = 165;
@@ -52,6 +55,8 @@ module dynomike.RoyalFlush {
             this._maskWindow.visible = true;
             this._maskWindow.y = 140;
 
+            var firstStop: dynomike.RoyalFlush.SlotSymbol = this._stops[0];
+
             this._minY = this._maskWindow.y;
             this._maxY = this._maskWindow.y + this._maskWindow.height;
 
@@ -59,12 +64,9 @@ module dynomike.RoyalFlush {
             var startY = this._minY; 
 
             this._paylineRowY = (this._maskWindow.y + (this._maskWindow.height / 2)); //Based on 1 payline
-
-            var firstStop: dynomike.RoyalFlush.SlotSymbol = this._stops[0];
-          
+            
             this._stopHeight = firstStop.height;
-
-            this._stepSpeed = 20 / 5;
+            this._stepSpeed = this._stopHeight / 5;
 
             for (var i = 0; i < this._stops.length; i++) {
                 var stop: dynomike.RoyalFlush.SlotSymbol = this._stops[i];
@@ -87,6 +89,14 @@ module dynomike.RoyalFlush {
             this._tailSymbol = this._stopSprites[this._stopSprites.length - 1];
             this._isRollingComplete = true;
 
+            /*
+            var paylineLine = new PIXI.Graphics();
+            paylineLine.beginFill(0xFF0000, 1);
+            paylineLine.lineStyle(1, 0xFF0000);
+            paylineLine.drawRect(0, this._paylineRowY, 300, 5);
+            this.addChild(paylineLine);
+            */
+
             this.update();
         }
 
@@ -95,25 +105,25 @@ module dynomike.RoyalFlush {
 
             if (this._isRollingComplete)
                 return;
-
             for (var i = 0; i < this._stopSprites.length; i++) {
+
                 var stop: dynomike.RoyalFlush.SlotSymbol = this._stopSprites[i];
                 stop.position.y = stop.y + this._stepSpeed;
-
-                if (stop.y - this._padding > this._maxY) {
+                if (stop.y > this._maxY + this._padding + 20) {
 
                     if (i + 1 == this._stopSprites.length) {
                         this._rollingCount++;
                     }
-
-                    stop.position.y = this._tailSymbol.y - this._tailSymbol.height - this._padding;
+                    stop.position.y = this._tailSymbol.y - this._tailSymbol.height - (stop.height / 2) - this._padding;
                     this._tailSymbol = stop;
                 }
 
-                if (this._stopAfterRollingCount === this._rollingCount && i === this._winningIndex) {
+                 if (this._stopAfterRollingCount === this._rollingCount && i === this._winningIndex) {
+
                     if (stop.y >= this._paylineRowY) {
                         if (this._winningIndex === 0) {
-                            this._tailSymbol.position.y = stop.y + stop.height - this._padding;
+
+                            this._tailSymbol.position.y = stop.y + stop.height;
                             this._tailSymbol = this._stopSprites[this._stopSprites.length - 2];
                         }
 
@@ -130,12 +140,9 @@ module dynomike.RoyalFlush {
         }
 
         private resetYPosition(currentStop: dynomike.RoyalFlush.SlotSymbol): void {
-            //adjusts the Y position on all y's after stop
-            var deltaY = currentStop.y - this._paylineRowY + (currentStop.height / 2);
-
+            var deltaY = currentStop.y - this._paylineRowY;
             for (var i = 0; i < this._stopSprites.length; i++) {
                 var newStop: dynomike.RoyalFlush.SlotSymbol = this._stopSprites[i];
-                console.log('setting ' + newStop.symbolID + ' to ' + (newStop.y - deltaY));
                 newStop.position.y = newStop.y - deltaY;
             }
         }
@@ -152,10 +159,8 @@ module dynomike.RoyalFlush {
             this._rollingCount = 0;
             this._stopAfterRollingCount = this.rand(1, 3);
 
-            var randomValue: number = 1; //gets PRNG number value
-
-            this._winningIndex = 2;
-            //randomValue % this._stops.length;
+            var randomValue = this.rand(-1, this._prngMaxRange);
+            this._winningIndex = randomValue % this._stops.length;
             this._isRollingComplete = false;
         }
 

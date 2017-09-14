@@ -14,14 +14,22 @@ var dynomike;
     (function (RoyalFlush) {
         var SlotSymbol = /** @class */ (function (_super) {
             __extends(SlotSymbol, _super);
-            function SlotSymbol(symbolImage, symbolID) {
+            function SlotSymbol(symbolImage, symbolID, index) {
                 var _this = _super.call(this) || this;
                 _this._symbolID = -1;
                 _this._active = false;
+                _this._index = 0;
+                _this._index = index;
                 _this._symbolID = symbolID;
                 _this._symbol = symbolImage;
                 _this.addChild(_this._symbol);
                 return _this;
+                /*
+                let text = new PIXI.Text("Index " + this._index, { fill: "#FFFFFF" });
+                text.x = 0;
+                text.y = 0;
+                this.addChild(text);
+                */
             }
             SlotSymbol.prototype.setActive = function (active) {
                 //play symbol. This will eventully be a spritesheet ani/multiframe
@@ -32,6 +40,11 @@ var dynomike;
             Object.defineProperty(SlotSymbol.prototype, "symbolID", {
                 get: function () { return this._symbolID; },
                 set: function (symbolID) { this._symbolID = symbolID; },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(SlotSymbol.prototype, "index", {
+                get: function () { return this._index; },
                 enumerable: true,
                 configurable: true
             });

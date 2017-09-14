@@ -25,11 +25,13 @@ module dynomike.RoyalFlush {
 
             var returnArray: Array<dynomike.RoyalFlush.SlotSymbol> = [];
 
+            symbols = this.shuffle(symbols);
+
             for (var i = 0; i < symbols.length; i++) {
                 var img = spriteArray[symbols[i]];
                 let spr = PIXI.Sprite.fromImage(img);
                 
-                var tmpSym: dynomike.RoyalFlush.SlotSymbol = new dynomike.RoyalFlush.SlotSymbol(spr, symbols[i]);
+                var tmpSym: dynomike.RoyalFlush.SlotSymbol = new dynomike.RoyalFlush.SlotSymbol(spr, symbols[i], i);
                 tmpSym.pivot.set(tmpSym.width / 2, tmpSym.height / 2);
                 returnArray.push(tmpSym);
             }
@@ -60,7 +62,6 @@ module dynomike.RoyalFlush {
         }
 
         private shuffle(array) {
-
             var currentIndex = array.length, temporaryValue, randomIndex;
 
             while (0 !== currentIndex) {

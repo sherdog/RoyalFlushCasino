@@ -35,10 +35,11 @@ var dynomike;
                 spriteArray[5] = 'assets/img/tripleDiamonSlot_TripleDiamond.png';
                 //new PIXI.Sprite.fromImage();
                 var returnArray = [];
+                symbols = this.shuffle(symbols);
                 for (var i = 0; i < symbols.length; i++) {
                     var img = spriteArray[symbols[i]];
                     var spr = PIXI.Sprite.fromImage(img);
-                    var tmpSym = new dynomike.RoyalFlush.SlotSymbol(spr, symbols[i]);
+                    var tmpSym = new dynomike.RoyalFlush.SlotSymbol(spr, symbols[i], i);
                     tmpSym.pivot.set(tmpSym.width / 2, tmpSym.height / 2);
                     returnArray.push(tmpSym);
                 }

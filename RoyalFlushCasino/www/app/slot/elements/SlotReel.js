@@ -25,7 +25,9 @@ var dynomike;
                 _this._isRollingComplete = false;
                 _this._stepSpeed = 5;
                 _this._stopHeight = 0;
-                _this._padding = 25;
+                _this._padding = 15;
+                _this._prngMinRange = 1;
+                _this._prngMaxRange = 1000000000;
                 _this.SYMBOL_HEIGHT = 165;
                 _this.SYMBOL_WIDTH = 165;
                 _this.SYMBOL_SPACING = 25;
@@ -48,14 +50,14 @@ var dynomike;
                 this.addChild(this._maskWindow);
                 this._maskWindow.visible = true;
                 this._maskWindow.y = 140;
+                var firstStop = this._stops[0];
                 this._minY = this._maskWindow.y;
                 this._maxY = this._maskWindow.y + this._maskWindow.height;
                 var startX = 83;
                 var startY = this._minY;
                 this._paylineRowY = (this._maskWindow.y + (this._maskWindow.height / 2)); //Based on 1 payline
-                var firstStop = this._stops[0];
                 this._stopHeight = firstStop.height;
-                this._stepSpeed = 20 / 5;
+                this._stepSpeed = this._stopHeight / 5;
                 for (var i = 0; i < this._stops.length; i++) {
                     var stop = this._stops[i];
                     this.addChild(stop);
@@ -72,6 +74,13 @@ var dynomike;
                 }
                 this._tailSymbol = this._stopSprites[this._stopSprites.length - 1];
                 this._isRollingComplete = true;
+                /*
+                var paylineLine = new PIXI.Graphics();
+                paylineLine.beginFill(0xFF0000, 1);
+                paylineLine.lineStyle(1, 0xFF0000);
+                paylineLine.drawRect(0, this._paylineRowY, 300, 5);
+                this.addChild(paylineLine);
+                */
                 this.update();
             };
             SlotReel.prototype.update = function () {
@@ -81,17 +90,17 @@ var dynomike;
                 for (var i = 0; i < this._stopSprites.length; i++) {
                     var stop = this._stopSprites[i];
                     stop.position.y = stop.y + this._stepSpeed;
-                    if (stop.y - this._padding > this._maxY) {
+                    if (stop.y > this._maxY + this._padding + 20) {
                         if (i + 1 == this._stopSprites.length) {
                             this._rollingCount++;
                         }
-                        stop.position.y = this._tailSymbol.y - this._tailSymbol.height - this._padding;
+                        stop.position.y = this._tailSymbol.y - this._tailSymbol.height - (stop.height / 2) - this._padding;
                         this._tailSymbol = stop;
                     }
                     if (this._stopAfterRollingCount === this._rollingCount && i === this._winningIndex) {
                         if (stop.y >= this._paylineRowY) {
                             if (this._winningIndex === 0) {
-                                this._tailSymbol.position.y = stop.y + stop.height - this._padding;
+                                this._tailSymbol.position.y = stop.y + stop.height;
                                 this._tailSymbol = this._stopSprites[this._stopSprites.length - 2];
                             }
                             this.resetYPosition(stop);
@@ -106,11 +115,9 @@ var dynomike;
                 this._state = this.STATE_STOPPING;
             };
             SlotReel.prototype.resetYPosition = function (currentStop) {
-                //adjusts the Y position on all y's after stop
-                var deltaY = currentStop.y - this._paylineRowY + (currentStop.height / 2);
+                var deltaY = currentStop.y - this._paylineRowY;
                 for (var i = 0; i < this._stopSprites.length; i++) {
                     var newStop = this._stopSprites[i];
-                    console.log('setting ' + newStop.symbolID + ' to ' + (newStop.y - deltaY));
                     newStop.position.y = newStop.y - deltaY;
                 }
             };
@@ -122,9 +129,8 @@ var dynomike;
                 this._state = this.STATE_SPINNING;
                 this._rollingCount = 0;
                 this._stopAfterRollingCount = this.rand(1, 3);
-                var randomValue = 1; //gets PRNG number value
-                this._winningIndex = 2;
-                //randomValue % this._stops.length;
+                var randomValue = this.rand(-1, this._prngMaxRange);
+                this._winningIndex = randomValue % this._stops.length;
                 this._isRollingComplete = false;
             };
             SlotReel.prototype.rand = function (min, max) {
