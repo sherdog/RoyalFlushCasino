@@ -20,7 +20,6 @@
 
     addEventListener("onStartClicked", function () {
         sceneManager.gotoScene('game');
-
     });
 
     function onTick() {
@@ -30,13 +29,7 @@
 
     function initializeAssets() {
 
-        loader.add('sym1', 'assets/img/symbol_1.png')
-            .add('sym2', 'assets/img/symbol_2.png')
-            .add('sym3', 'assets/img/symbol_3.png')
-            .add('sym4', 'assets/img/symbol_4.png')
-            .add('sym5', 'assets/img/symbol_5.png')
-            .add('sym6', 'assets/img/symbol_6.png')
-            .add('td_singleBar', 'assets/img/tripleDiamonSlot_SingleBar.png')
+        loader.add('td_singleBar', 'assets/img/tripleDiamonSlot_SingleBar.png')
             .add('td_dblBar', 'assets/img/tripleDiamonSlot_DoubleBar.png')
             .add('td_tplBar', 'assets/img/tripleDiamonSlot_TripleBar.png')
             .add('td_seven', 'assets/img/tripleDiamonSlot_RedSeven.png')

@@ -33,7 +33,6 @@ module dynomike.RoyalFlush {
 
         public playAnimation(): void {
             //this gets called if it's a special symbol.
-
         }
 
         set symbolID(symbolID: number) { this._symbolID = symbolID; }

@@ -14,7 +14,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var TripleDiamond = /** @class */ (function (_super) {
+        var TripleDiamond = (function (_super) {
             __extends(TripleDiamond, _super);
             function TripleDiamond() {
                 var _this = _super.call(this) || this;
@@ -23,13 +23,12 @@ var dynomike;
                 _this._reel1Symbols = [];
                 _this._reel2Symbols = [];
                 _this._reel3Symbols = [];
-                _this._prngMinRange = 1;
-                _this._prngMaxRange = 1000000000;
+                _this._reelIndex = 0;
                 _this._reelPositions = [0, 220, 440];
                 return _this;
             }
             TripleDiamond.prototype.initialize = function () {
-                this._reel1Symbols = [1, 2, 1, 4, 2, 3, 5, 1, 2, 3, 2, 3, 4, 5, 4, 3, 2, 3, 4, 5];
+                this._reel1Symbols = [1, 2, 1, 4, 2, 3, 5, 1, 2, 3, 2, 3, 4, 1, 4, 3, 2, 3, 4, 1];
                 this._reel2Symbols = [2, 1, 2, 2, 3, 2, 1, 4, 2, 1, 3, 5, 1, 2, 3, 4, 3, 4, 3, 2];
                 this._reel3Symbols = [1, 3, 2, 1, 2, 1, 3, 1, 2, 4, 1, 5, 2, 5, 1, 2, 2, 4, 2, 1];
                 this._reelStrip = new dynomike.RoyalFlush.TripleDiamondReelStrip();
@@ -54,14 +53,28 @@ var dynomike;
                 this.reel3.position.set(605, 175);
                 // this.reelContainer.position.x = 165;
                 // this.reelContainer.position.y = 175;
-                var buttonOutTexture = PIXI.Texture.fromImage("assets/img/btnSpin_out.png");
+                var buttonOutTeexture = PIXI.Texture.fromImage("assets/img/btnSpin_out.png");
                 var buttonOverTexture = PIXI.Texture.fromImage("assets/img/btnSpin_over.png");
-                this._spinButton = new dynomike.RoyalFlush.Button(buttonOutTexture, buttonOverTexture, this.onSpinClickHandler);
+                this._spinButton = new dynomike.RoyalFlush.Button(buttonOutTeexture, buttonOverTexture, this.onSpinClickHandler);
                 this.addChild(this._spinButton);
                 this._spinButton.position.x = 430;
                 this._spinButton.position.y = 600;
                 this._spinButton.on("pointerdown", this.onSpinClickHandler.bind(this));
+                this.reel1.on(dynomike.RoyalFlush.SlotReel.EVENT_ON_REEL_STOP, this.onReelStop.bind(this));
+                this.reel2.on(dynomike.RoyalFlush.SlotReel.EVENT_ON_REEL_STOP, this.onReelStop.bind(this));
+                this.reel3.on(dynomike.RoyalFlush.SlotReel.EVENT_ON_REEL_STOP, this.onReelStop.bind(this));
                 _super.prototype.initialize.call(this);
+            };
+            TripleDiamond.prototype.onReelStop = function () {
+                if (this._reelIndex === (this.reelArray.length - 1)) {
+                    this._state = this.STATE_IDLE;
+                    this._reelIndex = 0;
+                    _super.prototype.generateWin.call(this);
+                    return;
+                }
+                //start the next one.
+                this.reelArray[this._reelIndex + 1].stop(this._winningIndices[this._reelIndex]);
+                this._reelIndex++;
             };
             TripleDiamond.prototype.onSpinClickHandler = function (event) {
                 if (this._state === this.STATE_IDLE) {
@@ -72,27 +85,32 @@ var dynomike;
                     TweenMax.delayedCall(1.0, this.onTimerEnd.bind(this));
                 }
                 else {
+                    //Skill Stop This Shit.
+                    /*
                     TweenMax.killDelayedCallsTo(this.onTimerEnd.bind(this));
                     this._state = this.STATE_IDLE;
+    
                     for (var i = 0; i < this.reelArray.length; i++) {
-                        var reelLen = this.reelArray[i].stopCount;
+                        var reelLen: number = (this.reelArray[i] as dynomike.RoyalFlush.SlotReel).stopCount;
                         var randomValue = this.rand(this._prngMinRange, this._prngMaxRange);
                         var winningIndex = randomValue % reelLen;
                         TweenMax.delayedCall((0.5 * i), this.stopReel.bind(this), [i, winningIndex]);
                     }
+                    */
                 }
             };
             TripleDiamond.prototype.onTimerEnd = function () {
                 this._state = this.STATE_IDLE;
+                this.stopReel(0);
+                /*
                 for (var i = 0; i < this.reelArray.length; i++) {
-                    var reelLen = this.reelArray[i].stopCount;
-                    var randomValue = this.rand(this._prngMinRange, this._prngMaxRange);
-                    var winningIndex = randomValue % reelLen;
-                    TweenMax.delayedCall((0.5 * i), this.stopReel.bind(this), [i, winningIndex]);
+                    console.log('on timer end stopping on index: ' + this._winningIndices[i]);
+                    TweenMax.delayedCall((0.5 * i), this.stopReel.bind(this), [i, this._winningIndices[i]]);
                 }
+                */
             };
-            TripleDiamond.prototype.stopReel = function (reelIndex, winningIndex) {
-                this.reelArray[reelIndex].stop(winningIndex);
+            TripleDiamond.prototype.stopReel = function (reelIndex) {
+                this.reelArray[reelIndex].stop(this._winningIndices[reelIndex]);
             };
             TripleDiamond.prototype.rand = function (min, max) {
                 return Math.floor(Math.random() * (max - min + 1)) + min;

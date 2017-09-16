@@ -12,7 +12,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var ProgressBar = /** @class */ (function (_super) {
+        var ProgressBar = (function (_super) {
             __extends(ProgressBar, _super);
             function ProgressBar() {
                 return _super.call(this) || this;

@@ -12,7 +12,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var SlotReel = /** @class */ (function (_super) {
+        var SlotReel = (function (_super) {
             __extends(SlotReel, _super);
             function SlotReel(reelArray) {
                 var _this = _super.call(this) || this;
@@ -26,7 +26,7 @@ var dynomike;
                 _this._isRollingComplete = false;
                 _this._stepSpeed = 5;
                 _this._stopHeight = 0;
-                _this._padding = 0;
+                _this._padding = 10;
                 _this.SYMBOL_HEIGHT = 165;
                 _this.SYMBOL_WIDTH = 165;
                 _this.SYMBOL_SPACING = 10;
@@ -58,7 +58,7 @@ var dynomike;
                 var startY = this._minY;
                 this._paylineRowY = (this._maskWindow.y + (this._maskWindow.height / 2)); //Based on 1 payline
                 this._stopHeight = firstStop.height;
-                this._stepSpeed = 18.6;
+                this._stepSpeed = 38.6;
                 for (var i = 0; i < this._stops.length; i++) {
                     var stop = this._stops[i];
                     this.addChild(stop);
@@ -97,16 +97,22 @@ var dynomike;
                     }
                     //if (this._stopAfterRollingCount === this._rollingCount && i === this._winningIndex) {
                     if (this._stopRolling && i === this._winningIndex) {
-                        if (stop.y >= this._paylineRowY) {
+                        var overrun = this.randomInt(60, 120);
+                        if (stop.y >= this._paylineRowY + overrun) {
+                            console.log('overrun is ' + overrun);
                             if (this._winningIndex === 0) {
                                 this._tailSymbol.position.y = stop.y + stop.height;
                                 this._tailSymbol = this._stopSprites[this._stopSprites.length - 2];
                             }
                             this.resetYPosition(stop);
                             this._isRollingComplete = true;
+                            this.emit(dynomike.RoyalFlush.SlotReel.EVENT_ON_REEL_STOP);
                         }
                     }
                 }
+            };
+            SlotReel.prototype.randomInt = function (min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
             };
             SlotReel.prototype.stop = function (winningIndex) {
                 this._winningIndex = winningIndex;
@@ -117,6 +123,7 @@ var dynomike;
                 for (var i = 0; i < this._stopSprites.length; i++) {
                     var newStop = this._stopSprites[i];
                     newStop.position.y = newStop.y - deltaY;
+                    dispatchEvent(new Event(SlotReel.ON_REEL_STOP));
                 }
             };
             SlotReel.prototype.spin = function () {
@@ -141,6 +148,9 @@ var dynomike;
             });
             return SlotReel;
         }(PIXI.Container));
+        SlotReel.EVENT_ON_REEL_STOP = "OnReelStop";
+        SlotReel.ON_REEL_STOP = "OnReelStop";
+        SlotReel.ON_REEL_START = "OnReelStart";
         RoyalFlush.SlotReel = SlotReel;
     })(RoyalFlush = dynomike.RoyalFlush || (dynomike.RoyalFlush = {}));
 })(dynomike || (dynomike = {}));

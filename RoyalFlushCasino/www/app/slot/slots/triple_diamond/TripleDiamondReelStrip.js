@@ -12,7 +12,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var TripleDiamondReelStrip = /** @class */ (function (_super) {
+        var TripleDiamondReelStrip = (function (_super) {
             __extends(TripleDiamondReelStrip, _super);
             function TripleDiamondReelStrip() {
                 var _this = _super.call(this) || this;

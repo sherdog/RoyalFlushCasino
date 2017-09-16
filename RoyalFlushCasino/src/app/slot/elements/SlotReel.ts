@@ -2,6 +2,8 @@
 module dynomike.RoyalFlush {
     export class SlotReel extends PIXI.Container {
 
+        public static EVENT_ON_REEL_STOP: string = "OnReelStop";
+
         private symbols = [];
         private _stops: Array<dynomike.RoyalFlush.SlotSymbol>;
         private _stopSprites = [];
@@ -15,7 +17,10 @@ module dynomike.RoyalFlush {
         private _isRollingComplete: boolean = false;
         private _stepSpeed: number = 5;
         private _stopHeight: number = 0;
-        private _padding: number = 0;
+        private _padding: number = 10;
+
+        public static ON_REEL_STOP: string = "OnReelStop";
+        public static ON_REEL_START: string = "OnReelStart";
 
         private SYMBOL_HEIGHT = 165;
         private SYMBOL_WIDTH = 165;
@@ -68,7 +73,7 @@ module dynomike.RoyalFlush {
             this._paylineRowY = (this._maskWindow.y + (this._maskWindow.height / 2)); //Based on 1 payline
             
             this._stopHeight = firstStop.height;
-            this._stepSpeed = 18.6;
+            this._stepSpeed = 38.6;
 
             for (var i = 0; i < this._stops.length; i++) {
 
@@ -121,22 +126,29 @@ module dynomike.RoyalFlush {
                 }
                 //if (this._stopAfterRollingCount === this._rollingCount && i === this._winningIndex) {
                 if (this._stopRolling && i === this._winningIndex) {
+                    var overrun = this.randomInt(60, 120);
+                    if (stop.y >= this._paylineRowY + overrun) {
 
-                    if (stop.y >= this._paylineRowY) {
+                        console.log('overrun is ' + overrun);
                         if (this._winningIndex === 0) {
-
                             this._tailSymbol.position.y = stop.y + stop.height;
                             this._tailSymbol = this._stopSprites[this._stopSprites.length - 2];
                         }
 
                         this.resetYPosition(stop);
+
                         this._isRollingComplete = true;
+                        this.emit(dynomike.RoyalFlush.SlotReel.EVENT_ON_REEL_STOP);
                     }
                 }
             }
         }
 
-        public stop(winningIndex) {
+        private randomInt(min: number, max: number) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        public stop(winningIndex: number) {
             this._winningIndex = winningIndex;
             this._stopRolling = true;
         }
@@ -146,7 +158,9 @@ module dynomike.RoyalFlush {
             for (var i = 0; i < this._stopSprites.length; i++) {
                 var newStop: dynomike.RoyalFlush.SlotSymbol = this._stopSprites[i];
                 newStop.position.y = newStop.y - deltaY;
+                dispatchEvent(new Event(SlotReel.ON_REEL_STOP));
             }
+            
         }
 
         public spin()
@@ -169,7 +183,5 @@ module dynomike.RoyalFlush {
         public get stopCount(): number {
             return this._stops.length;
         }
-
-       
     }
 }

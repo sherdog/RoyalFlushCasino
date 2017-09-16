@@ -13,8 +13,7 @@ module dynomike.RoyalFlush {
         protected _reel2Symbols = [];
         protected _reel3Symbols = [];
 
-        private _prngMinRange: number = 1;
-        private _prngMaxRange: number = 1000000000;
+        protected _reelIndex = 0;
 
         protected _reelPositions: Array<number> = [0, 220, 440];
 
@@ -24,7 +23,7 @@ module dynomike.RoyalFlush {
 
         protected initialize() {
 
-            this._reel1Symbols = [1, 2, 1, 4, 2, 3, 5, 1, 2, 3, 2, 3, 4, 5, 4, 3, 2, 3, 4, 5];
+            this._reel1Symbols = [1, 2, 1, 4, 2, 3, 5, 1, 2, 3, 2, 3, 4, 1, 4, 3, 2, 3, 4, 1];
             this._reel2Symbols = [2, 1, 2, 2, 3, 2, 1, 4, 2, 1, 3, 5, 1, 2, 3, 4, 3, 4, 3, 2];
             this._reel3Symbols = [1, 3, 2, 1, 2, 1, 3, 1, 2, 4, 1, 5, 2, 5, 1, 2, 2, 4, 2, 1];
 
@@ -60,16 +59,34 @@ module dynomike.RoyalFlush {
            // this.reelContainer.position.x = 165;
            // this.reelContainer.position.y = 175;
 
-            var buttonOutTexture = PIXI.Texture.fromImage("assets/img/btnSpin_out.png");
+            var buttonOutTeexture = PIXI.Texture.fromImage("assets/img/btnSpin_out.png");
             var buttonOverTexture = PIXI.Texture.fromImage("assets/img/btnSpin_over.png");
 
-            this._spinButton = new dynomike.RoyalFlush.Button(buttonOutTexture, buttonOverTexture, this.onSpinClickHandler);
+            this._spinButton = new dynomike.RoyalFlush.Button(buttonOutTeexture, buttonOverTexture, this.onSpinClickHandler);
             this.addChild(this._spinButton);
             this._spinButton.position.x = 430;
             this._spinButton.position.y = 600;
             this._spinButton.on("pointerdown", this.onSpinClickHandler.bind(this));
 
+            this.reel1.on(dynomike.RoyalFlush.SlotReel.EVENT_ON_REEL_STOP, this.onReelStop.bind(this));
+            this.reel2.on(dynomike.RoyalFlush.SlotReel.EVENT_ON_REEL_STOP, this.onReelStop.bind(this));
+            this.reel3.on(dynomike.RoyalFlush.SlotReel.EVENT_ON_REEL_STOP, this.onReelStop.bind(this));
+
             super.initialize();
+        }
+
+        protected onReelStop(): void {
+            if (this._reelIndex === (this.reelArray.length - 1))
+            {
+                this._state = this.STATE_IDLE;
+                this._reelIndex = 0;
+                super.generateWin();
+                return;
+            }
+
+            //start the next one.
+            (this.reelArray[this._reelIndex + 1] as dynomike.RoyalFlush.SlotReel).stop(this._winningIndices[this._reelIndex]);
+            this._reelIndex++;
         }
 
         protected onSpinClickHandler(event) {
@@ -85,6 +102,9 @@ module dynomike.RoyalFlush {
                 TweenMax.delayedCall(1.0, this.onTimerEnd.bind(this));
 
             } else {
+                //Skill Stop This Shit.
+                
+                /*
                 TweenMax.killDelayedCallsTo(this.onTimerEnd.bind(this));
                 this._state = this.STATE_IDLE;
 
@@ -94,21 +114,23 @@ module dynomike.RoyalFlush {
                     var winningIndex = randomValue % reelLen;
                     TweenMax.delayedCall((0.5 * i), this.stopReel.bind(this), [i, winningIndex]);
                 }
+                */
             }
         }
 
         private onTimerEnd(): void {
             this._state = this.STATE_IDLE;
+            this.stopReel(0);
+            /*
             for (var i = 0; i < this.reelArray.length; i++) {
-                var reelLen: number = (this.reelArray[i] as dynomike.RoyalFlush.SlotReel).stopCount;
-                var randomValue = this.rand(this._prngMinRange, this._prngMaxRange);
-                var winningIndex = randomValue % reelLen;
-                TweenMax.delayedCall((0.5 * i), this.stopReel.bind(this), [i, winningIndex]);
+                console.log('on timer end stopping on index: ' + this._winningIndices[i]);
+                TweenMax.delayedCall((0.5 * i), this.stopReel.bind(this), [i, this._winningIndices[i]]);
             }
+            */
         }
 
-        protected stopReel(reelIndex, winningIndex) {
-            (this.reelArray[reelIndex] as dynomike.RoyalFlush.SlotReel).stop(winningIndex);
+        protected stopReel(reelIndex) {
+            (this.reelArray[reelIndex] as dynomike.RoyalFlush.SlotReel).stop(this._winningIndices[reelIndex]);
         }
 
         private rand(min: number, max: number) {

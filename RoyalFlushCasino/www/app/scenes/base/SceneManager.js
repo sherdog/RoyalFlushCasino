@@ -2,7 +2,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var SceneManager = /** @class */ (function () {
+        var SceneManager = (function () {
             function SceneManager() {
             }
             SceneManager.init = function (app) {
@@ -35,9 +35,9 @@ var dynomike;
                 }
                 return false;
             };
-            SceneManager.scenes = {};
             return SceneManager;
         }());
+        SceneManager.scenes = {};
         RoyalFlush.SceneManager = SceneManager;
     })(RoyalFlush = dynomike.RoyalFlush || (dynomike.RoyalFlush = {}));
 })(dynomike || (dynomike = {}));

@@ -12,10 +12,12 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var SlotMachine = /** @class */ (function (_super) {
+        var SlotMachine = (function (_super) {
             __extends(SlotMachine, _super);
             function SlotMachine() {
                 var _this = _super.call(this) || this;
+                _this._prngMinRange = 1;
+                _this._prngMaxRange = 1000000000;
                 _this.TILE_WIDTH = 100;
                 _this.TILE_HEIGHT = _this.TILE_WIDTH;
                 _this.STATE_SPINNING = 1;
@@ -27,25 +29,19 @@ var dynomike;
             }
             SlotMachine.prototype.initialize = function () {
                 //override in concretes
-                this.onSlotReady();
+                this.generateWin();
+            };
+            SlotMachine.prototype.generateWin = function () {
+                this._winningIndices = [];
+                for (var i = 0; i < this.reelArray.length; i++) {
+                    var reelLen = this.reelArray[i].stopCount;
+                    var randomValue = this.getRandomInt(this._prngMinRange, this._prngMaxRange);
+                    this._winningIndices.push(randomValue % reelLen);
+                }
             };
             SlotMachine.prototype.onSlotReady = function () {
-                var preChoosedPosition = this.getRandomPositions();
-                for (var i = 0; i < this.reelArray.length; i++) {
-                    var finishPos = (-preChoosedPosition[i] * this.TILE_HEIGHT);
-                }
-                // this.draw();
             };
             SlotMachine.prototype.draw = function () {
-                //update the input controller. and set disabled i think
-            };
-            SlotMachine.prototype.getRandomPositions = function () {
-                var x = this.getRandomInt(0, 100);
-                if (x > 50) {
-                    x = this.getRandomInt(0, 6);
-                    return [x, x, x];
-                }
-                return [this.getRandomInt(-1, 6), this.getRandomInt(0, 6), this.getRandomInt(-1, 6)];
             };
             SlotMachine.prototype.getRandomInt = function (min, max) {
                 var randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
