@@ -12,7 +12,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var SlotReel = (function (_super) {
+        var SlotReel = /** @class */ (function (_super) {
             __extends(SlotReel, _super);
             function SlotReel(reelArray) {
                 var _this = _super.call(this) || this;
@@ -146,11 +146,11 @@ var dynomike;
                 enumerable: true,
                 configurable: true
             });
+            SlotReel.EVENT_ON_REEL_STOP = "OnReelStop";
+            SlotReel.ON_REEL_STOP = "OnReelStop";
+            SlotReel.ON_REEL_START = "OnReelStart";
             return SlotReel;
         }(PIXI.Container));
-        SlotReel.EVENT_ON_REEL_STOP = "OnReelStop";
-        SlotReel.ON_REEL_STOP = "OnReelStop";
-        SlotReel.ON_REEL_START = "OnReelStart";
         RoyalFlush.SlotReel = SlotReel;
     })(RoyalFlush = dynomike.RoyalFlush || (dynomike.RoyalFlush = {}));
 })(dynomike || (dynomike = {}));

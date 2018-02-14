@@ -12,7 +12,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var PlayerModel = (function (_super) {
+        var PlayerModel = /** @class */ (function (_super) {
             __extends(PlayerModel, _super);
             function PlayerModel() {
                 var _this = _super.call(this) || this;

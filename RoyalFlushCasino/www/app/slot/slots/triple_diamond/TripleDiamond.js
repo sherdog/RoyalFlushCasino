@@ -14,7 +14,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var TripleDiamond = (function (_super) {
+        var TripleDiamond = /** @class */ (function (_super) {
             __extends(TripleDiamond, _super);
             function TripleDiamond() {
                 var _this = _super.call(this) || this;
@@ -41,16 +41,18 @@ var dynomike;
                 this.reel1SymbolArray = this._reelStrip.createStrip(this._reel1Symbols);
                 this.reel2SymbolArray = this._reelStrip.createStrip(this._reel2Symbols);
                 this.reel3SymbolArray = this._reelStrip.createStrip(this._reel3Symbols);
-                this.reel1 = new dynomike.RoyalFlush.SlotReel(this.reel1SymbolArray);
-                this.reel2 = new dynomike.RoyalFlush.SlotReel(this.reel2SymbolArray);
-                this.reel3 = new dynomike.RoyalFlush.SlotReel(this.reel3SymbolArray);
-                this.reelArray = [this.reel1, this.reel2, this.reel3];
-                this.addChild(this.reel1);
-                this.addChild(this.reel2);
-                this.addChild(this.reel3);
-                this.reel1.position.set(165, 175);
-                this.reel2.position.set(385, 175);
-                this.reel3.position.set(605, 175);
+                var positionArray = [[165, 175], [385, 175], [605, 175]];
+                this.reelArray = [
+                    new dynomike.RoyalFlush.SlotReel(this.reel1SymbolArray),
+                    new dynomike.RoyalFlush.SlotReel(this.reel2SymbolArray),
+                    new dynomike.RoyalFlush.SlotReel(this.reel3SymbolArray)
+                ];
+                for (var i = 0; i < this.reelArray.length; i++) {
+                    console.log('Adding reels ' + this.reelArray[i]);
+                    this.addChild(this.reelArray[i]);
+                    this.reelArray[i].on(dynomike.RoyalFlush.SlotReel.EVENT_ON_REEL_STOP, this.onReelStop.bind(this));
+                    this.reelArray[i].position.set(positionArray[i][0], positionArray[i][1]);
+                }
                 // this.reelContainer.position.x = 165;
                 // this.reelContainer.position.y = 175;
                 var buttonOutTeexture = PIXI.Texture.fromImage("assets/img/btnSpin_out.png");
@@ -60,9 +62,6 @@ var dynomike;
                 this._spinButton.position.x = 430;
                 this._spinButton.position.y = 600;
                 this._spinButton.on("pointerdown", this.onSpinClickHandler.bind(this));
-                this.reel1.on(dynomike.RoyalFlush.SlotReel.EVENT_ON_REEL_STOP, this.onReelStop.bind(this));
-                this.reel2.on(dynomike.RoyalFlush.SlotReel.EVENT_ON_REEL_STOP, this.onReelStop.bind(this));
-                this.reel3.on(dynomike.RoyalFlush.SlotReel.EVENT_ON_REEL_STOP, this.onReelStop.bind(this));
                 _super.prototype.initialize.call(this);
             };
             TripleDiamond.prototype.onReelStop = function () {

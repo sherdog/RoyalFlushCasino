@@ -2,7 +2,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var TripleDiamondDSymbols = (function () {
+        var TripleDiamondDSymbols = /** @class */ (function () {
             function TripleDiamondDSymbols() {
             }
             TripleDiamondDSymbols.prototype.TripleDiamondSymbols = function () {

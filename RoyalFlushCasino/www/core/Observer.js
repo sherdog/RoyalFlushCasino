@@ -2,7 +2,7 @@ var dynomike;
 (function (dynomike) {
     var RoyalFlush;
     (function (RoyalFlush) {
-        var Observer = (function () {
+        var Observer = /** @class */ (function () {
             function Observer() {
                 this.observerList = [];
             }
